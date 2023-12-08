@@ -13,6 +13,8 @@ public abstract class Player {
         this.piedras = new int[] { 0, 0 };
     }
 
+    public abstract Celda[][] jugar(int row, int col, String tipoPiedra);
+
     public int getScore() {
         return score;
     }

@@ -38,7 +38,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	private static TitleComponent title;
 	private static JButton play2PlayerButton;
 	private static JButton playWithComputerButton;
-	private static JButton playMachineVsMachineButton;
 	private static JButton exitButton2;
 
 	private static JPanel panel;
@@ -167,14 +166,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		playWithComputerButton.addActionListener(this);
 		playWithComputerButton.setFocusPainted(false);
 
-		playMachineVsMachineButton = new JButton("Computador vs Computador");
-		playMachineVsMachineButton.setForeground(Color.WHITE);
-		playMachineVsMachineButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		playMachineVsMachineButton.setOpaque(false);
-		playMachineVsMachineButton.setContentAreaFilled(false);
-		playMachineVsMachineButton.addActionListener(this);
-		playMachineVsMachineButton.setFocusPainted(false);
-
 		exitButton2 = new JButton("Salir");
 		exitButton2.setForeground(Color.WHITE);
 		exitButton2.setFont(new Font("SansSerif", Font.PLAIN, 30));
@@ -186,7 +177,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		container.add(title);
 		container.add(play2PlayerButton);
 		container.add(playWithComputerButton);
-		container.add(playMachineVsMachineButton);
 		container.add(exitButton2);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -276,10 +266,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 				GameController.setIsPlayWithComputer(true);
 				GameController.setIsPlayOnliComputer(false);
 				Gomoku.setPlayer1("HumanoPlayer", "Jugador 1");
-				Gomoku.setPlayer2("MaquinaExpertaPlayer", "Computador");
-			} else if (e.getSource() == playMachineVsMachineButton) {
-				GameController.setIsPlayOnliComputer(true);
-				Gomoku.setPlayer1("MaquinaExpertaPlayer", "Computador");
 				Gomoku.setPlayer2("MaquinaExpertaPlayer", "Computador");
 			}
 			welcomeScreen();

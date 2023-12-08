@@ -120,8 +120,8 @@ public class Gomoku {
     /**
      * Devuelve el modo de juego actual.
      */
-    public String getModoDeJuego() {
-        return modoJuego.getModo();
+    public ModoJuego getModoDeJuego() {
+        return modoJuego;
     }
 
     public void setMensaje(String mensaje) {
