@@ -61,11 +61,23 @@ public class Gomoku {
     }
 
     /**
-     * Realiza una jugada en el juego.
+     * Realiza una jugada de algun jugador de pendiendo del turno.
      */
     public Celda[][] jugada(int row, int col) {
         if (validarCantidadPiedras()) {
-            return modoJuego.jugar(row, col, "PiedraPesada");
+            if (player1.getColor().equals(turno)) {
+                if (!(player2 instanceof HumanoPlayer)) {
+                    Celda[][] temporal = player1.jugar(row, col, "PiedraPesada");
+                    player2.jugar(row, col, mensajeSalida);
+                    board = temporal;
+                    return board;
+                } else {
+                    turno = "Negra";
+                    return player1.jugar(row, col, "PiedraPesada");
+                }
+            } else {
+                return player2.jugar(row, col, "PiedraLigera");
+            }
         } else {
             return board;
         }
@@ -169,13 +181,13 @@ public class Gomoku {
      */
     public static void setPlayer1(String tipo, String NombreJugador1) {
         if (tipo.equals("HumanoPlayer")) {
-            player1 = new HumanoPlayer(NombreJugador1, "WHITE");
+            player1 = new HumanoPlayer(NombreJugador1, "Blanca");
         } else if (tipo.equals("MaquinaAgresivaPlayer")) {
-            player1 = new MaquinaAgresivaPlayer(NombreJugador1, "WHITE");
+            player1 = new MaquinaAgresivaPlayer(NombreJugador1, "Blanca");
         } else if (tipo.equals("MaquinaMiedosaPlayer")) {
-            player1 = new MaquinaMiedosaPlayer(NombreJugador1, "WHITE");
+            player1 = new MaquinaMiedosaPlayer(NombreJugador1, "Blanca");
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
-            player1 = new MaquinaExpertaPlayer(NombreJugador1, "WHITE");
+            player1 = new MaquinaExpertaPlayer(NombreJugador1, "Blanca");
         }
     }
 
@@ -184,13 +196,13 @@ public class Gomoku {
      */
     public static void setPlayer2(String tipo, String NombreJugador1) {
         if (tipo.equals("HumanoPlayer")) {
-            player2 = new HumanoPlayer(NombreJugador1, "BLACK");
+            player2 = new HumanoPlayer(NombreJugador1, "Negra");
         } else if (tipo.equals("MaquinaAgresivaPlayer")) {
-            player2 = new MaquinaAgresivaPlayer(NombreJugador1, "BLACK");
+            player2 = new MaquinaAgresivaPlayer(NombreJugador1, "Negra");
         } else if (tipo.equals("MaquinaMiedosaPlayer")) {
-            player2 = new MaquinaMiedosaPlayer(NombreJugador1, "BLACK");
+            player2 = new MaquinaMiedosaPlayer(NombreJugador1, "Negra");
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
-            player2 = new MaquinaExpertaPlayer(NombreJugador1, "BLACK");
+            player2 = new MaquinaExpertaPlayer(NombreJugador1, "Negra");
         }
     }
 
