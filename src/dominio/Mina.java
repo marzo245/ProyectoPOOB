@@ -27,7 +27,7 @@ public class Mina extends Celda {
 
         Gomoku.getInstance().setCelda(row, col, new Ocupada());
         Piedra piedra = Gomoku.getCelda(row, col).getPiedra();
-        piedra.setName(turnoActual.equals("Blanca") ? "WHITE" : "BLACK");
+        piedra.setName(turnoActual.equals("Blanca") ? "Blanca" : "Negra");
     }
 
     private void calcularPuntos(boolean propia) {
