@@ -15,8 +15,6 @@ public class Gomoku {
     private static Gomoku instance;
     // Turno actual
     private static String turno;
-    // Indica si se ha encontrado un ganador
-    private boolean winnerFound;
     // Modo de juego actual
     private ModoJuego modoJuego;
     // Mensaje de salida
@@ -42,8 +40,6 @@ public class Gomoku {
     public Gomoku(String NombreJugador1, String tipo1, String NombreJugador2, String tipo2, String modoDeJuegoElegido) {
         setPlayer1(tipo1, NombreJugador1);
         setPlayer2(tipo2, NombreJugador2);
-        turno = player1.getColor();
-
         turno = "Blanca";
         if (modoDeJuegoElegido.equals("Normal")) {
             modoJuego = new ModoNormal();
@@ -57,7 +53,6 @@ public class Gomoku {
         } else {
             modoJuego = new ModoNormal();
         }
-        winnerFound = false;
     }
 
     /**
@@ -65,22 +60,33 @@ public class Gomoku {
      */
     public Celda[][] jugada(int row, int col) {
         if (validarCantidadPiedras()) {
-            if (player1.getColor().equals(turno)) {
+            Celda[][] temporal;
+
+            if (turno.equals("Blanca")) {
                 if (!(player2 instanceof HumanoPlayer)) {
-                    Celda[][] temporal = player1.jugar(row, col, "PiedraPesada");
-                    player2.jugar(row, col, "PiedraPesada");
-                    board = temporal;
-                    return board;
-                } else {
+                    temporal = player1.jugar(row, col, "PiedraPesada");
+                    Gomoku.getInstance().setBoard(temporal); // Actualiza el tablero en Gomoku
                     turno = "Negra";
-                    return player1.jugar(row, col, "PiedraPesada");
+                    return temporal;
+                } else {
+                    temporal = player1.jugar(row, col, "PiedraPesada");
+                    Gomoku.getInstance().setBoard(temporal);
+                    turno = "Negra";
+                    return temporal;
                 }
             } else {
-                return player2.jugar(row, col, "PiedraLigera");
+                temporal = player2.jugar(row, col, "Piedrapesada");
+                Gomoku.getInstance().setBoard(temporal);
+                turno = "Blanca";
+                return temporal;
             }
         } else {
-            return board;
+            return Gomoku.getBoard();
         }
+    }
+
+    public void setBoard(Celda[][] board) {
+        Gomoku.board = board;
     }
 
     /**
@@ -106,6 +112,10 @@ public class Gomoku {
      */
     public Boolean getHayMensaje() {
         return hayMensaje;
+    }
+
+    public String getMensaje() {
+        return mensajeSalida;
     }
 
     /**
@@ -210,14 +220,20 @@ public class Gomoku {
      * Devuelve la celda en la posición especificada.
      */
     public static Celda getCelda(int row, int col) {
-        return board[row][col];
+        Celda celda = board[row][col];
+        if (celda instanceof Vacia) {
+            Piedra nuevaPiedra = new PiedraVacia(); // Reemplaza con la clase de piedra que necesites
+            celda.setPiedra(nuevaPiedra);
+        }
+        return celda;
     }
 
     /**
      * Establece la celda en la posición especificada.
      */
     public void setCelda(int row, int col, Celda celda) {
-        board[row][col] = celda;
+        // Crea una nueva instancia de la celda para evitar problemas con la referencia
+        board[row][col] = celda.clonar();
     }
 
     /**
@@ -266,7 +282,6 @@ public class Gomoku {
                     player1.setPiedrasPesadas(10);
                     return validarCantidadPiedras();
                 } else {
-
                     mensaje("No tienes piedras pesadas");
                     hayMensaje = true;
                     return false;
@@ -278,15 +293,25 @@ public class Gomoku {
                 return true;
             } else {
                 if (modoJuego instanceof ModoNormal) {
-                    player1.setPiedrasPesadas(10);
+                    player2.setPiedrasPesadas(10);
                     return validarCantidadPiedras();
                 } else {
-
                     mensaje("No tienes piedras pesadas");
                     hayMensaje = true;
                     return false;
                 }
             }
+        }
+    }
+
+    public void imprimirTablero() {
+        System.out.println("Tablero actual:");
+
+        for (int i = 0; i < Board.HEIGHT; i++) {
+            for (int j = 0; j < Board.WIDTH; j++) {
+                System.out.print(board[i][j].toString() + " ");
+            }
+            System.out.println();
         }
     }
 }

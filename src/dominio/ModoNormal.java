@@ -5,46 +5,57 @@ public class ModoNormal extends ModoJuego {
         super();
     }
 
-    public Celda[][] jugar(int row, int col, String tipoCelda) {
-        if (Gomoku.getTurno().equals(Gomoku.getPlayer1().getColor())) {
-            Gomoku.setTurno(Gomoku.getPlayer2().getColor());
-            return ponerPiedra(row, col, tipoCelda);
-        } else {
-            Gomoku.setTurno(Gomoku.getPlayer1().getColor());
-            return ponerPiedra(row, col, tipoCelda);
-        }
+    public Celda[][] jugar(int row, int col, String tipoPiedra) {
+        return ponerPiedra(row, col, tipoPiedra);
     }
 
     public Celda[][] ponerPiedra(int row, int col, String tipoPiedra) {
         if (validarPosicion(row, col)) {
-            if (Gomoku.getTurno().equals("Blanca")) {
-                Gomoku.getBoard()[row][col].getPiedra().setName("WHITE");
-                Gomoku.setTurno("Negra");
-            } else {
-                Gomoku.getBoard()[row][col].getPiedra().setName("BLACK");
-                Gomoku.setTurno("Blanca");
-            }
+
             Gomoku.getInstance().setCelda(row, col, new Ocupada());
-            Gomoku.getInstance().getCelda(row, col).setPiedra(tipoPiedra);
+
+            // Obtén la celda actual y la piedra asociada
+            Celda celda = Gomoku.getCelda(row, col);
+            Piedra piedraActual = celda.getPiedra();
+
+            // Verifica si la piedra actual es una instancia de PiedraVacia
+            if (piedraActual instanceof PiedraVacia) {
+                // Si es PiedraVacia, crea una nueva instancia de Piedra y asígnale el nombre
+                Piedra nuevaPiedra;
+                if (tipoPiedra.equals("PiedraPesada")) {
+                    nuevaPiedra = new PiedraPesada();
+                } else {
+                    // Agrega condiciones para otros tipos de piedra si es necesario
+                    nuevaPiedra = new PiedraLigera();
+                }
+                nuevaPiedra.setName(Gomoku.getTurno());
+
+                // Asigna la nueva piedra a la celda
+                celda.setPiedra(nuevaPiedra);
+            } else {
+                Gomoku.getInstance().setMensaje("Celda ocupada");
+                Gomoku.getInstance().setHayMensjae(true);
+            }
+        } else {
+            Gomoku.getInstance().setMensaje("Celda ocupada");
+            Gomoku.getInstance().setHayMensjae(true);
         }
-        Gomoku.getInstance().setMensaje("Celda ocupada");
-        Gomoku.getInstance().setHayMensjae(true);
         return Gomoku.getBoard();
     }
 
     public boolean validarPosicion(int row, int col) {
-        if (Gomoku.getInstance().getCelda(row, col) instanceof Vacia)
+        if (Gomoku.getCelda(row, col) instanceof Vacia)
             return true;
-        else if (Gomoku.getInstance().getCelda(row, col) instanceof Mina) {
-            Gomoku.getInstance().getCelda(row, col).actuando(row, col);
+        else if (Gomoku.getCelda(row, col) instanceof Mina) {
+            Gomoku.getCelda(row, col).actuando(row, col);
             Gomoku.getInstance().setMensaje("Has pisado una mina");
             Gomoku.getInstance().setHayMensjae(true);
             return true;
-        } else if (Gomoku.getInstance().getCelda(row, col) instanceof Teleport) {
-            Gomoku.getInstance().getCelda(row, col).actuando(row, col);
+        } else if (Gomoku.getCelda(row, col) instanceof Teleport) {
+            Gomoku.getCelda(row, col).actuando(row, col);
             Gomoku.getInstance().setMensaje("Has pisado un teleport");
             Gomoku.getInstance().setHayMensjae(true);
-            return true;
+            return false;
         }
 
         return false;
