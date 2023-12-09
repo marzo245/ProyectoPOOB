@@ -346,21 +346,12 @@ public class GameController implements ActionListener {
 			info.setText("Turno: " + Gomoku.getPlayer1().getName()
 					+ " |   Color ficha: Blanca  | Total movimientos: "
 					+ numStep);
-		} else {
-			cell.setColor(Cell.EMPTY);
-			BoardComponent.getCells()[randomRow][randomCol].setColor(Cell.BLACK);
-			lastColor = Cell.BLACK;
-			JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-			info.setText("Turno: " + Gomoku.getPlayer2().getName()
-					+ " |   Color ficha: Negra | Total movimientos: "
-					+ numStep);
 		}
 
 		checkWinner(randomRow, randomCol);
 		checkCellAvailability();
 
-		if (!winnerFound) {
-			if(isPlayWithComputer && lastColor!= Cell.WHITE)
+		if (!winnerFound && isPlayWithComputer) {
 			numStep++;
 			computerPlayer.play();
 			lastColor = Cell.WHITE;
@@ -401,11 +392,10 @@ public class GameController implements ActionListener {
 					+ " |   Color ficha: Blanca | Total movimientos: "
 					+ numStep);
 		}
-		if (!winnerFound) {
-			if(isPlayWithComputer && lastColor != Cell.WHITE)
+		if (!winnerFound && isPlayWithComputer) {
 			numStep++;
 			computerPlayer.play();
-			lastColor = Cell.WHITE;
+			lastColor = Cell.BLACK;
 			JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 			info.setText("Turno: " + GomokuGUI.getFirstName()
 					+ " | Color ficha: Negra | Total movimientos: "
