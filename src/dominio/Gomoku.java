@@ -68,7 +68,7 @@ public class Gomoku {
             if (player1.getColor().equals(turno)) {
                 if (!(player2 instanceof HumanoPlayer)) {
                     Celda[][] temporal = player1.jugar(row, col, "PiedraPesada");
-                    player2.jugar(row, col, mensajeSalida);
+                    player2.jugar(row, col, "PiedraPesada");
                     board = temporal;
                     return board;
                 } else {
