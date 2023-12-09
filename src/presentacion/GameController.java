@@ -336,7 +336,7 @@ public class GameController implements ActionListener {
 		numStep++;
 
 		if (lastColor == Cell.BLACK) {
-			// Después de cambiar el color de la celda aleatoria
+
 			cell.setColor(Cell.EMPTY);
 			BoardComponent.getCells()[randomRow][randomCol].setColor(Cell.WHITE);
 
