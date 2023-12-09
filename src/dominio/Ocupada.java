@@ -1,21 +1,30 @@
 package dominio;
 
 public class Ocupada extends Celda {
-    private static Piedra piedra = null;
+
+    public Ocupada() {
+
+        super();
+    }
 
     public void actuando(int row, int col) {
     }
 
-    public static Piedra getPiedra() {
+    public Piedra getPiedra() {
         return piedra;
     }
 
-    public static void setPiedra(Piedra Newpiedra) {
-        piedra = Newpiedra;
-        if (Gomoku.getInstance().getTurno().equals("Blanca")) {
-            piedra.setName("WHITE");
+    public void setPiedra(Piedra piedra) {
+        super.setPiedra(piedra);
+        if (Gomoku.getTurno().equals("Blanca")) {
+            piedra.setName("Blanca");
         } else {
-            piedra.setName("BLACK");
+            piedra.setName("Negra");
         }
+    }
+
+    @Override
+    public Celda clonar() {
+        return new Ocupada();
     }
 }

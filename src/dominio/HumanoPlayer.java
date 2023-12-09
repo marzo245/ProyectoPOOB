@@ -17,7 +17,7 @@ public class HumanoPlayer extends Player {
     }
 
     public Celda[][] jugar(int row, int col, String tipoPiedra) {
-        return Gomoku.getInstance().getModoDeJuego().jugar(row, col, "PiedraPesada");
+        return Gomoku.getInstance().getModoDeJuego().jugar(row, col, tipoPiedra);
     }
 
 }

@@ -8,7 +8,13 @@
 package dominio;
 
 public abstract class Celda {
-    protected static Piedra piedra = new PiedraVacia();
+    protected Piedra piedra;
+
+    public Celda() {
+        this.piedra = new PiedraVacia();
+    }
+
+    public abstract Celda clonar();
 
     /*
      * Devuelve el color de la celda.
@@ -22,7 +28,7 @@ public abstract class Celda {
      * Establece el color de la celda.
      * param piedra es un objeto de tipo Piedra.
      */
-    public static void setPiedra(String tipoPiedra) {
+    public void setPiedra(String tipoPiedra) {
         if (tipoPiedra.equals("PiedraPesada")) {
             piedra = new PiedraPesada();
         } else if (tipoPiedra.equals("PiedraLigera")) {
@@ -31,7 +37,31 @@ public abstract class Celda {
             piedra = new PiedraVacia();
     }
 
-    public static Piedra getPiedra() {
+    public Piedra getPiedra() {
         return piedra;
     }
+
+    public void setPiedra(Piedra piedra) {
+        this.piedra = piedra;
+    }
+
+    @Override
+    public String toString() {
+        if (this instanceof Vacia) {
+            return "-";
+        } else if (this instanceof Mina) {
+            return "M";
+        } else if (this instanceof Teleport) {
+            return "T";
+        } else if (this instanceof Ocupada) {
+            if (piedra.getName().equals("Blanca")) {
+                return "B";
+            } else {
+                return "N";
+            }
+        } else
+            // Puedes ajustar esto según tu lógica para representar otras celdas
+            return "X";
+    }
+
 }

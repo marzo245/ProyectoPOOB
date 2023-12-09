@@ -2,7 +2,7 @@ package dominio;
 
 public abstract class Piedra {
     protected static int vida = -1;
-    protected static String nombre = "Nothing";
+    protected String nombre = "Nothing";
     protected static int row;
     protected static int col;
 

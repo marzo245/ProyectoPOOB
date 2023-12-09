@@ -54,6 +54,8 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	private static JButton maquinaAgresiva;
 	private static JButton exitButton3;
 
+	public static Gomoku gomoku;
+
 	/**
 	 * Constructor de la clase GomokuGUI. Configura la apariencia inicial de la
 	 * interfaz.
@@ -66,7 +68,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		constructMainDisplay();
 		add(menuPrincipal, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
-		Gomoku gomoku = new Gomoku("player1", "HumanoPlayer", "player2", "HumanoPlayer", "Normal");
+		gomoku = new Gomoku("player1", "HumanoPlayer", "player2", "HumanoPlayer", "Normal");
 		setVisible(true);
 	}
 
@@ -449,6 +451,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			 */
 			if (GameController.getIsPlayWithComputer()) {
 				TimerComponent.getTimer().start();
+				Gomoku.getPlayer2().setName("Computador");
 			}
 
 			/*

@@ -14,9 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import dominio.Board;
-import dominio.Gomoku;
+import dominio.*;
 
 public class GameController implements ActionListener {
 
@@ -61,16 +59,56 @@ public class GameController implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent event) {
 		if (cell.getEnableClick()) {
-			String celda;
-			if (cell.getColor() == Cell.EMPTY) {
-				handleEmptyCell();
-			} else if (cell.getColor() == Cell.TELEPORT) {
-				handleTeleportCell();
-			} else if (cell.getColor() == Cell.MiINE) {
-				handleMineCell();
-			} else if (cell.getColor() == Cell.GOLDEN) {
-				handleGoldenCell();
+			if (Gomoku.getTurno().equals("Blanca")) {
+				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+				info.setText("Turno: " + GomokuGUI.getFirstName()
+						+ " |   Color ficha: Negra  | Total movimientos: "
+						+ numStep + " | Puntaje: " + Gomoku.getPlayer1().getScore());
+			} else {
+				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+				info.setText("Turno: " + GomokuGUI.getSecondName()
+						+ " |   Color ficha: Blanca  | Total movimientos: "
+						+ numStep + " | Puntaje: " + Gomoku.getPlayer2().getScore());
 			}
+			// if (cell.getColor() == Cell.EMPTY) {
+			Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol());
+			for (int i = 0; i < Board.WIDTH; i++) {
+				for (int j = 0; j < Board.HEIGHT; j++) {
+					if (temp[i][j] instanceof Ocupada) {
+						if (temp[i][j].getPiedra().getName().equals("Blanca")) {
+							lastColor = Cell.WHITE;
+							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);
+						} else {
+							lastColor = Cell.BLACK;
+							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.BLACK);
+						}
+					} else if (temp[i][j] instanceof Mina) {
+						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.MiINE);
+						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+					} else if (temp[i][j] instanceof Teleport) {
+						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.TELEPORT);
+						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+					} else if (temp[i][j] instanceof Vacia) {
+						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.EMPTY);
+						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+
+					} else {
+						GomokuGUI.getBoardComponent().getCells()[i][j].setEnabled(true);
+					}
+
+				}
+			}
+
+			GomokuGUI.getBoardComponent().repaint();
+			checkWinner(cell.getRow(), cell.getCol());
+			if (Gomoku.getInstance().getHayMensaje()) {
+				JOptionPane.showMessageDialog(null,
+						Gomoku.getInstance().getMensaje(),
+						"Evento", JOptionPane.INFORMATION_MESSAGE);
+				Gomoku.getInstance().setHayMensjae(false);
+			}
+			System.out.println("Anterior turno: " + Gomoku.getTurno());
+			Gomoku.getInstance().imprimirTablero();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Celda ocupada.\nPor favor vuelva a elegir otra celda!",
@@ -224,6 +262,7 @@ public class GameController implements ActionListener {
 		colOfWin.clear();
 		TimerComponent.getTimer().stop();
 		TimerComponent.resetTimer();
+		Gomoku.getInstance().crearBoard(3, 3);
 		GomokuGUI.getBoardComponent().clearBoard();
 		GomokuGUI.getInfoComponent().clearInfo();
 	}
@@ -336,7 +375,7 @@ public class GameController implements ActionListener {
 		numStep++;
 
 		if (lastColor == Cell.BLACK) {
-			// Después de cambiar el color de la celda aleatoria
+
 			cell.setColor(Cell.EMPTY);
 			BoardComponent.getCells()[randomRow][randomCol].setColor(Cell.WHITE);
 
@@ -372,10 +411,6 @@ public class GameController implements ActionListener {
 			checkWinner(computerPlayer.getRow(), computerPlayer.getCol());
 			checkCellAvailability();
 		}
-		JOptionPane.showMessageDialog(null,
-				"¡Has activado la celda de Teletransporte!\n"
-						+ "Una nueva ficha se ha colocado en una ubicación aleatoria.",
-				"Celda de Teletransporte", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
@@ -401,7 +436,7 @@ public class GameController implements ActionListener {
 					+ " |   Color ficha: Blanca | Total movimientos: "
 					+ numStep);
 		}
-		
+
 		GomokuGUI.getBoardComponent().repaint();
 		JOptionPane.showMessageDialog(null,
 				"¡Has activado la celda de Mina!\n"
@@ -415,7 +450,7 @@ public class GameController implements ActionListener {
 		JOptionPane.showMessageDialog(null,
 				"¡Has activado la celda de Golden!\n"
 						+ ".",
-				"Celda Golden", JOptionPane.INFORMATION_MESSAGE);
+				"Celda de Mina", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }
