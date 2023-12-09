@@ -6,13 +6,19 @@ public abstract class Piedra {
     protected static int row;
     protected static int col;
 
-    public abstract void setVida(int a);
+    public void setVida(int a) {
+        vida = a;
+    }
 
     public abstract void ronda();
 
     public void setName(String name) {
         nombre = name;
 
+    }
+
+    public int getVida() {
+        return vida;
     }
 
     public String getName() {

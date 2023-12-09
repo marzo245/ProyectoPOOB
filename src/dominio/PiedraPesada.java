@@ -6,10 +6,6 @@ public class PiedraPesada extends Piedra {
         super.vida = -1;
     }
 
-    public void setVida(int a) {
-        super.vida = -1;
-    }
-
     public void ronda() {
     }
 }
