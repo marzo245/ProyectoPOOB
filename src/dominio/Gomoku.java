@@ -4,6 +4,8 @@ package dominio;
  * La clase Gomoku representa el juego de Gomoku.
  * Contiene la lógica principal del juego y mantiene el estado del tablero y los
  * jugadores.
+ * Autor: Chicuazuque-Sierra
+ * version 2.0 - 2023/09/12
  */
 public class Gomoku {
     // Tablero del juego
@@ -36,6 +38,13 @@ public class Gomoku {
     /**
      * Constructor de Gomoku.
      * Inicializa los jugadores, el turno, el modo de juego y el estado del ganador.
+     * 
+     * @param NombreJugador1     Nombre del primer jugador
+     * @param tipo1              Tipo del primer jugador
+     * @param NombreJugador2     Nombre del segundo jugador
+     * @param tipo2              Tipo del segundo jugador
+     * @param modoDeJuegoElegido Modo de juego elegido
+     * 
      */
     public Gomoku(String NombreJugador1, String tipo1, String NombreJugador2, String tipo2, String modoDeJuegoElegido) {
         setPlayer1(tipo1, NombreJugador1);
@@ -57,6 +66,11 @@ public class Gomoku {
 
     /**
      * Realiza una jugada de algun jugador de pendiendo del turno.
+     * Predefine el tipo de piedra como "PiedraPesada".
+     * 
+     * @param row Fila de la celda
+     * @param col Columna de la celda
+     * @return Tablero del juego
      */
     public Celda[][] jugada(int row, int col) {
         if (validarCantidadPiedras()) {
@@ -85,12 +99,13 @@ public class Gomoku {
         }
     }
 
-    public void setBoard(Celda[][] board) {
-        Gomoku.board = board;
-    }
-
     /**
      * Realiza una jugada en el juego.
+     * 
+     * @param row        Fila de la celda
+     * @param col        Columna de la celda
+     * @param tipoPiedra Tipo de piedra
+     * @return Tablero del juego
      */
     public Celda[][] jugada(int row, int col, String tipoPiedra) {
         if (validarCantidadPiedras()) {
@@ -101,7 +116,36 @@ public class Gomoku {
     }
 
     /**
+     * Limpia el tablero del juego.
+     * 
+     */
+    public void clearBoard() {
+        crearBoard(0, 0);
+    }
+
+    /**
+     * Establece el tablero del juego.
+     * 
+     * @param board Tablero del juego
+     */
+    public void setBoard(Celda[][] board) {
+        Gomoku.board = board;
+    }
+
+    /**
+     * Devuelve el tablero del juego.
+     * 
+     * @return Tablero del juego
+     */
+    public static Celda[][] getBoard() {
+        return board;
+    }
+
+    /**
      * Establece si el movimiento es correcto.
+     * 
+     * @param movimiento Movimiento correcto
+     * 
      */
     public void setHayMensjae(Boolean movimiento) {
         this.hayMensaje = movimiento;
@@ -109,49 +153,54 @@ public class Gomoku {
 
     /**
      * Devuelve si el movimiento es correcto.
+     * 
+     * @return Movimiento correcto
      */
     public Boolean getHayMensaje() {
         return hayMensaje;
     }
 
+    /**
+     * Devuelve el mensaje de salida.
+     * 
+     * @return Mensaje de salida
+     */
     public String getMensaje() {
         return mensajeSalida;
     }
 
     /**
-     * Limpia el tablero del juego.
+     * Establece el mensaje de salida.
+     * 
+     * @param mensaje Mensaje de salida
+     * 
      */
-    public void clearBoard() {
-        crearBoard(0, 0);
-    }
-
-    /**
-     * Devuelve el tablero del juego.
-     */
-    public static Celda[][] getBoard() {
-        return board;
-    }
-
-    /**
-     * Devuelve el primer jugador.
-     */
-    public static Player getPlayer1() {
-        return player1;
-    }
-
-    /**
-     * Devuelve el modo de juego actual.
-     */
-    public ModoJuego getModoDeJuego() {
-        return modoJuego;
-    }
-
     public void setMensaje(String mensaje) {
         mensajeSalida = mensaje;
     }
 
     /**
+     * Establece el mensaje de salida.
+     * 
+     * @param mensaje Mensaje de salida
+     */
+    public void mensaje(String mensaje) {
+        mensajeSalida = mensaje;
+    }
+
+    /**
+     * Devuelve el modo de juego actual.
+     * 
+     * @return Modo de juego actual
+     */
+    public ModoJuego getModoDeJuego() {
+        return modoJuego;
+    }
+
+    /**
      * Establece el modo de juego.
+     * 
+     * @param modoDeJuegoElegido Modo de juego elegido
      */
     public void setModoDeJuego(String modoDeJuegoElegido) {
         if (modoDeJuegoElegido.equals("Normal")) {
@@ -166,28 +215,28 @@ public class Gomoku {
     }
 
     /**
+     * Devuelve el primer jugador.
+     * 
+     * @return Primer jugador
+     */
+    public static Player getPlayer1() {
+        return player1;
+    }
+
+    /**
      * Devuelve el segundo jugador.
+     * 
+     * @return Segundo jugador
      */
     public static Player getPlayer2() {
         return player2;
     }
 
     /**
-     * Devuelve el turno actual.
-     */
-    public static String getTurno() {
-        return turno;
-    }
-
-    /**
-     * Establece el turno actual.
-     */
-    public static void setTurno(String t) {
-        turno = t;
-    }
-
-    /**
      * Establece el primer jugador.
+     * 
+     * @param tipo           Tipo de jugador
+     * @param NombreJugador1 Nombre del jugador
      */
     public static void setPlayer1(String tipo, String NombreJugador1) {
         if (tipo.equals("HumanoPlayer")) {
@@ -203,6 +252,10 @@ public class Gomoku {
 
     /**
      * Establece el segundo jugador.
+     * 
+     * @param tipo           Tipo de jugador
+     * @param NombreJugador1 Nombre del jugador
+     * 
      */
     public static void setPlayer2(String tipo, String NombreJugador1) {
         if (tipo.equals("HumanoPlayer")) {
@@ -217,7 +270,29 @@ public class Gomoku {
     }
 
     /**
+     * Devuelve el turno actual.
+     * 
+     * @return Turno actual
+     */
+    public static String getTurno() {
+        return turno;
+    }
+
+    /**
+     * Establece el turno actual.
+     * 
+     * @param t Turno actual
+     */
+    public static void setTurno(String t) {
+        turno = t;
+    }
+
+    /**
      * Devuelve la celda en la posición especificada.
+     * 
+     * @param row Fila de la celda
+     * @param col Columna de la celda
+     * @return Celda en la posición especificada
      */
     public static Celda getCelda(int row, int col) {
         Celda celda = board[row][col];
@@ -263,13 +338,6 @@ public class Gomoku {
             } while (board[telepRow][telepCol] instanceof Ocupada);
             board[telepRow][telepCol] = new Teleport();
         }
-    }
-
-    /**
-     * Establece el mensaje de salida.
-     */
-    public void mensaje(String mensaje) {
-        mensajeSalida = mensaje;
     }
 
     private boolean validarCantidadPiedras() {
