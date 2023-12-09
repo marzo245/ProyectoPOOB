@@ -1,11 +1,29 @@
 package dominio;
 
+/**
+ * Esta clase define el tipo de celda Teleport la cual tiene una vida de -1
+ * y cada ronda que pasa no pierde vida
+ * Su comportamiento es mover al jugador a una posición aleatoria
+ * 
+ * Autor: Chicuazuque-Sierra
+ * Version: 1.2 09/12/2023
+ */
 public class Teleport extends Celda {
 
+    /**
+     * Constructor de la clase
+     */
     public Teleport() {
         super();
     }
 
+    /**
+     * Este metodo define el comportamiento de la celda una vez es activada
+     * 
+     * @param row fila de la celda
+     * @param col columna de la celda
+     * 
+     */
     public void actuando(int row, int col) {
         int randomRow, randomCol;
         do {
@@ -32,6 +50,9 @@ public class Teleport extends Celda {
         }
     }
 
+    /**
+     * Este metodo se encarga de clonar la celda
+     */
     @Override
     public Celda clonar() {
         return new Vacia();

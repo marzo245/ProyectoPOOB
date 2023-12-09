@@ -1,7 +1,17 @@
 package dominio;
 
+/**
+ * Esta clase es una instancia de una celda mina.
+ * Esta celda al ser jugada elimina todas las piedras adyacentes
+ * pero deja en su posicion la piedra que la jugo.
+ * Autor: Chicuazuque-Sierra
+ * Version: 1.2 09/12/2023
+ */
 public class Mina extends Celda {
 
+    /**
+     * Constructor de la clase.
+     */
     public Mina() {
         super();
     }
@@ -46,6 +56,11 @@ public class Mina extends Celda {
         }
     }
 
+    /**
+     * Este metodo se encarga de clonar la celda
+     * 
+     * @return Celda clonada
+     */
     @Override
     public Celda clonar() {
         return new Vacia();
