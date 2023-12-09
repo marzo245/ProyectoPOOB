@@ -449,6 +449,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			 */
 			if (GameController.getIsPlayWithComputer()) {
 				TimerComponent.getTimer().start();
+				Gomoku.getPlayer2().setName("Computador");
 			}
 
 			/*
