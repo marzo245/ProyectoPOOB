@@ -3,13 +3,16 @@
  * la altura y el ancho del tablero.
  * 
  * Autor: Chicuazuque-Sierra
- * Version: 1.0 25/11/2023
+ * Version: 1.2 09/12/2023
  */
 package dominio;
 
 public abstract class Celda {
     protected Piedra piedra;
 
+    /*
+     * Constructor de la clase.
+     */
     public Celda() {
         this.piedra = new PiedraVacia();
     }
@@ -18,15 +21,17 @@ public abstract class Celda {
 
     /*
      * Devuelve el color de la celda.
-     * param row Fila de la celda.
-     * param col Columna de la celda.
-     * return Color de la celda.
+     * 
+     * @param row Fila de la celda.
+     * 
+     * @param col Columna de la celda.
      */
     public abstract void actuando(int row, int col);
 
     /*
      * Establece el color de la celda.
-     * param piedra es un objeto de tipo Piedra.
+     * 
+     * @param piedra es un objeto de tipo Piedra.
      */
     public void setPiedra(String tipoPiedra) {
         if (tipoPiedra.equals("PiedraPesada")) {
@@ -37,14 +42,29 @@ public abstract class Celda {
             piedra = new PiedraVacia();
     }
 
+    /*
+     * Devuelve el color de la celda.
+     * 
+     * @return Color de la celda.
+     */
     public Piedra getPiedra() {
         return piedra;
     }
 
+    /*
+     * Establece el color de la celda.
+     * 
+     * @param piedra es un objeto de tipo Piedra.
+     */
     public void setPiedra(Piedra piedra) {
         this.piedra = piedra;
     }
 
+    /*
+     * Devuelve el color de la celda.
+     * 
+     * @return Color de la celda.
+     */
     @Override
     public String toString() {
         if (this instanceof Vacia) {
