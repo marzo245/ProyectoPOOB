@@ -344,10 +344,19 @@ public class GameController implements ActionListener {
 			lastColor = Cell.WHITE;
 			JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 			info.setText("Turno: " + Gomoku.getPlayer1().getName()
-					+ " |   Color ficha: Blanca  | Total movimientos: "
+					+ " |   Color ficha: Negra  | Total movimientos: "
+					+ numStep);
+		}else {
+			cell.setColor(Cell.EMPTY);
+			BoardComponent.getCells()[randomRow][randomCol].setColor(Cell.BLACK);
+			GomokuGUI.getBoardComponent().repaint();
+			lastColor = Cell.BLACK;
+			JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+			info.setText("Turno: " + Gomoku.getPlayer2().getName()
+					+ " |   Color ficha: Negra | Total movimientos: "
 					+ numStep);
 		}
-
+		
 		checkWinner(randomRow, randomCol);
 		checkCellAvailability();
 
@@ -359,7 +368,7 @@ public class GameController implements ActionListener {
 			info.setText("Turno: " + GomokuGUI.getFirstName()
 					+ " | Color ficha: Negra | Total movimientos: "
 					+ numStep);
-
+					
 			checkWinner(computerPlayer.getRow(), computerPlayer.getCol());
 			checkCellAvailability();
 		}
@@ -392,18 +401,7 @@ public class GameController implements ActionListener {
 					+ " |   Color ficha: Blanca | Total movimientos: "
 					+ numStep);
 		}
-		if (!winnerFound && isPlayWithComputer) {
-			numStep++;
-			computerPlayer.play();
-			lastColor = Cell.BLACK;
-			JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-			info.setText("Turno: " + GomokuGUI.getFirstName()
-					+ " | Color ficha: Negra | Total movimientos: "
-					+ numStep);
-
-			checkWinner(computerPlayer.getRow(), computerPlayer.getCol());
-			checkCellAvailability();
-		}
+		
 		GomokuGUI.getBoardComponent().repaint();
 		JOptionPane.showMessageDialog(null,
 				"¡Has activado la celda de Mina!\n"
