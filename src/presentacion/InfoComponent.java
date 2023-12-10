@@ -38,7 +38,7 @@ public class InfoComponent extends JPanel {
 	 * a sus valores predeterminados antes de que comience el juego.
 	 */
 	public void clearInfo() {
-		currentPlayer.setText("Turno: " + GomokuGUI.getFirstName()
+		currentPlayer.setText("Turno: " + GomokuGUI.getSecondName()
 				+ " | Color ficha: Negra | Total movimientos: 0");
 	}
 }

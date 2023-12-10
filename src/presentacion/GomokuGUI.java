@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dominio.Gomoku;
+import dominio.HumanoPlayer;
 
 public class GomokuGUI extends JFrame implements ActionListener {
 	private static GomokuGUI gomokuGUI;
@@ -308,8 +309,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			remove(panel);
 
 			if (e.getSource() == play2PlayerButton) {
-				GameController.setIsPlayWithComputer(false);
-				GameController.setIsPlayOnliComputer(false);
 				Gomoku.setPlayer1("HumanoPlayer", "Jugador 1");
 				Gomoku.setPlayer2("HumanoPlayer", "Jugador 2");
 				Dimension boardSize = new Dimension(600, 600);
@@ -340,8 +339,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 				revalidate();
 				welcomeScreen();
 			} else if (e.getSource() == playWithComputerButton) {
-				GameController.setIsPlayWithComputer(true);
-				GameController.setIsPlayOnliComputer(false);
 				Gomoku.setPlayer1("HumanoPlayer", "Jugador 1");
 				Gomoku.setPlayer2("MaquinaExpertaPlayer", "Computador");
 				constructModeMachine();
@@ -435,7 +432,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	 * Además, inicia el temporizador del juego según la configuración.
 	 */
 	public static void welcomeScreen() {
-		if (!GameController.getPlayOnliComputer()) {
+		if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
 			firstName = JOptionPane.showInputDialog(null,
 					"Bienvenido a GOMOKU!", "Ingresa el nombre del jugador uno");
 			firstName = firstName == null ? "Primer jugador" : firstName;
@@ -449,7 +446,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			 * decir,
 			 * el primer jugador, ingresa el nombre, comienza el temporizador del juego.
 			 */
-			if (GameController.getIsPlayWithComputer()) {
+			if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
 				TimerComponent.getTimer().start();
 				Gomoku.getPlayer2().setName("Computador");
 			}
@@ -459,7 +456,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			 * nombre
 			 * y después de ingresar el nombre, comienza el temporizador del juego.
 			 */
-			if (!GameController.getIsPlayWithComputer()) {
+			if (Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer) {
 				secondName = JOptionPane.showInputDialog(null,
 						"Bienvenido a GOMOKU!", "Ingresa el nombre  del jugador dos");
 				secondName = secondName == null ? "Segundo jugador" : secondName;
