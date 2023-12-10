@@ -80,7 +80,6 @@ public class Gomoku {
                 if (!(player2 instanceof HumanoPlayer)) {
                     temporal = player1.jugar(row, col, "PiedraPesada");
                     Gomoku.getInstance().setBoard(temporal); // Actualiza el tablero en Gomoku
-                    turno = "Negra";
                     return temporal;
                 } else {
                     temporal = player1.jugar(row, col, "PiedraPesada");
