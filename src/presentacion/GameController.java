@@ -101,6 +101,7 @@ public class GameController implements ActionListener {
 
 			GomokuGUI.getBoardComponent().repaint();
 			checkWinner(cell.getRow(), cell.getCol());
+			checkCellAvailability();
 			if (Gomoku.getInstance().getHayMensaje()) {
 				JOptionPane.showMessageDialog(null,
 						Gomoku.getInstance().getMensaje(),
