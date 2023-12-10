@@ -1,11 +1,25 @@
 package dominio;
 
+/**
+ * Esta clase define el tipo de piedra pesada la cual tiene una vida de -1
+ * y cada ronda que pasa no pierde vida
+ * 
+ * Autor: Chicuazuque-Sierra
+ * Version: 1.2 09/12/2023
+ */
 public class PiedraPesada extends Piedra {
+
+    /**
+     * Constructor de la clase
+     */
     public PiedraPesada() {
         super();
         super.vida = -1;
     }
 
+    /**
+     * Este metodo define cuando pasa una ronda en el juego
+     */
     public void ronda() {
     }
 }

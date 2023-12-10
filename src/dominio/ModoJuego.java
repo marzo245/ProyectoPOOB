@@ -1,18 +1,47 @@
 package dominio;
 
+/**
+ * Esta clase es la encargada de definir el modo de juego.
+ * Autor: Chicuazuque-Sierra
+ * Version: 1.2 09/12/2023
+ */
 public abstract class ModoJuego {
     protected static String modo;
 
+    /**
+     * Constructor de la clase.
+     */
     public ModoJuego() {
 
     }
 
+    /**
+     * Este metodo retorna el modo de juego.
+     * 
+     * @return Modo de juego.
+     */
     public String getModo() {
         return modo;
     }
 
+    /**
+     * Este metodo se encarga de jugar una piedra en el tablero.
+     * 
+     * @param row       Fila donde se quiere jugar la piedra.
+     * @param col       Columna donde se quiere jugar la piedra.
+     * @param tipoCelda Tipo de celda que se quiere jugar.
+     * @return Tablero con la piedra jugada.
+     */
     public abstract Celda[][] jugar(int row, int col, String tipoCelda);
 
+    /**
+     * Este metodo se encarga de poner una piedra en el tablero.
+     * 
+     * @param row        Fila donde se quiere jugar la piedra.
+     * @param col        Columna donde se quiere jugar la piedra.
+     * @param tipoPiedra Tipo de piedra que se quiere jugar.
+     * @return Tablero con la piedra jugada.
+     */
     public Celda[][] ponerPiedra(int row, int col, String tipoPiedra) {
         if (validarPosicion(row, col)) {
 
@@ -47,6 +76,13 @@ public abstract class ModoJuego {
         return Gomoku.getBoard();
     }
 
+    /**
+     * Este metodo se encarga de validar la posicion de la celda.
+     * 
+     * @param row Fila donde se quiere jugar la piedra.
+     * @param col Columna donde se quiere jugar la piedra.
+     * @return True si la posicion es valida, false de lo contrario.
+     */
     public boolean validarPosicion(int row, int col) {
         if (Gomoku.getCelda(row, col) instanceof Vacia)
             return true;
