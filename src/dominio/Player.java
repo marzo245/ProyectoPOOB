@@ -8,7 +8,7 @@ package dominio;
 public abstract class Player {
     private int score;
     private String color;
-    private String name = "NoName";
+    private String name;
     private int[] piedras;
 
     /**
