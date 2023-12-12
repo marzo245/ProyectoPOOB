@@ -21,7 +21,7 @@ public class GameController implements ActionListener {
 	private CellComponent cell;
 	private static Cell lastColor;
 	private static int numStep = 0;
-
+	private static String tipoDePiedra = "Piedra pesada";
 	/**
 	 * ArrayList para almacenar las filas y columnas de las fichas que forman
 	 * la disposición ganadora.
@@ -54,22 +54,9 @@ public class GameController implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent event) {
 		if (cell.getEnableClick()) {
-			if (Gomoku.getTurno().equals("Blanca")) {
-				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-				info.setText("Turno: " + GomokuGUI.getFirstName()
-						+ " |   Color ficha: Negra  | Total movimientos: "
-						+ numStep + " | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
-			} else {
-				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-				info.setText("Turno: " + GomokuGUI.getSecondName()
-						+ " |   Color ficha: Blanca  | Total movimientos: "
-						+ numStep + " | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
-			}
 
 			// if (cell.getColor() == Cell.EMPTY) {
-			Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol());
+			Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
 			for (int i = 0; i < Board.WIDTH; i++) {
 				for (int j = 0; j < Board.HEIGHT; j++) {
 					if (temp[i][j] instanceof Ocupada) {
@@ -96,6 +83,23 @@ public class GameController implements ActionListener {
 
 				}
 			}
+			if (Gomoku.getTurno().equals("Blanca")) {
+				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+				info.setText("Turno: " + GomokuGUI.getFirstName()
+						+ " |   Color ficha: Negra  | totalPiedrasPesadas:"
+						+ Gomoku.getInstance().getPlayer2().getPiedrasPesadas() +
+						" totalPiedrasLigeras" + Gomoku.getInstance().getPlayer2().getPiedrasLigeras() +
+						" | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
+				System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
+			} else {
+				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+				info.setText("Turno: " + GomokuGUI.getSecondName()
+						+ " |   Color ficha: Blanca  	| totalPiedrasPesadas:"
+						+ Gomoku.getInstance().getPlayer2().getPiedrasPesadas() +
+						" totalPiedrasLigeras" + Gomoku.getInstance().getPlayer2().getPiedrasLigeras()
+						+ " | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
+				System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
+			}
 
 			GomokuGUI.getBoardComponent().repaint();
 			checkWinner(cell.getRow(), cell.getCol());
@@ -106,6 +110,7 @@ public class GameController implements ActionListener {
 						"Evento", JOptionPane.INFORMATION_MESSAGE);
 				Gomoku.getInstance().setHayMensjae(false);
 			}
+
 			Gomoku.getInstance().imprimirTablero();
 		} else {
 			JOptionPane.showMessageDialog(null,
@@ -113,6 +118,10 @@ public class GameController implements ActionListener {
 					"Advertencia", JOptionPane.WARNING_MESSAGE);
 		}
 
+	}
+
+	public static void setPiedra(String newPiedra) {
+		tipoDePiedra = newPiedra;
 	}
 
 	/**
@@ -166,9 +175,9 @@ public class GameController implements ActionListener {
 	public void notifyWinner() {
 		JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 		if (Gomoku.getInstance().getGanador().equals("Negra")) {
-			info.setText("Bravo! " + GomokuGUI.getFirstName() + " ganó con " + numStep + " movimientos totales! :)");
+			info.setText("Bravo! " + GomokuGUI.getFirstName() + " ganó:)");
 		} else {
-			info.setText("Bravo! " + GomokuGUI.getSecondName() + " ganó con " + numStep + " movimientos totales! :");
+			info.setText("Bravo! " + GomokuGUI.getSecondName() + " ganó :");
 		}
 	}
 

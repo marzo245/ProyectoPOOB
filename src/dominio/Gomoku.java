@@ -79,13 +79,13 @@ public class Gomoku {
      * @param col Columna de la celda
      * @return Tablero del juego
      */
-    public Celda[][] jugada(int row, int col) {
-        if (validarCantidadPiedras()) {
+    public Celda[][] jugada(int row, int col, String tipoPiedra) {
+        if (validarCantidadPiedras(tipoPiedra)) {
             Celda[][] temporal;
 
             if (turno.equals("Blanca")) {
                 if (!(player2 instanceof HumanoPlayer)) {
-                    temporal = player1.jugar(row, col, "PiedraPesada");
+                    temporal = player1.jugar(row, col, tipoPiedra);
                     checkWinner(row, col);
                     Gomoku.getInstance().setBoard(temporal); // Actualiza el tablero en Gomoku
                     if (!SeEncontroGanador) {
@@ -95,14 +95,14 @@ public class Gomoku {
                     }
                     return temporal;
                 } else {
-                    temporal = player1.jugar(row, col, "PiedraPesada");
+                    temporal = player1.jugar(row, col, tipoPiedra);
                     Gomoku.getInstance().setBoard(temporal);
                     turno = "Negra";
                     checkWinner(row, col);
                     return temporal;
                 }
             } else {
-                temporal = player2.jugar(row, col, "Piedrapesada");
+                temporal = player2.jugar(row, col, tipoPiedra);
                 Gomoku.getInstance().setBoard(temporal);
                 turno = "Blanca";
                 checkWinner(row, col);
@@ -114,10 +114,6 @@ public class Gomoku {
         }
     }
 
-    public boolean getSeEncontroGanador() {
-        return SeEncontroGanador;
-    }
-
     /**
      * Realiza una jugada en el juego.
      * 
@@ -126,12 +122,12 @@ public class Gomoku {
      * @param tipoPiedra Tipo de piedra
      * @return Tablero del juego
      */
-    public Celda[][] jugada(int row, int col, String tipoPiedra) {
-        if (validarCantidadPiedras()) {
-            return modoJuego.jugar(row, col, tipoPiedra);
-        } else {
-            return board;
-        }
+    public Celda[][] jugada(int row, int col) {
+        return jugada(row, col, "PiedraPesada");
+    }
+
+    public boolean getSeEncontroGanador() {
+        return SeEncontroGanador;
     }
 
     public String getGanador() {
@@ -503,7 +499,7 @@ public class Gomoku {
     /**
      * Establece la celda en la posición especificada.
      */
-    public void setCelda(int row, int col, Celda celda) {
+    public static void setCelda(int row, int col, Celda celda) {
         // Crea una nueva instancia de la celda para evitar problemas con la referencia
         board[row][col] = celda.clonar();
     }
@@ -537,34 +533,34 @@ public class Gomoku {
         }
     }
 
-    private boolean validarCantidadPiedras() {
+    private boolean validarCantidadPiedras(String tipoPiedra) {
         if (turno.equals("Blanca")) {
-            if (player1.getPiedrasPesadas() > 0) {
-                player1.ronda("Pesada");
+            if (player1.getPiedrasPesadas() > 0 || player1.getPiedrasLigeras() > 0) {
+                player1.ronda(tipoPiedra);
                 return true;
             } else {
-                if (modoJuego instanceof ModoNormal) {
+                if (modoJuego instanceof ModoNormal || modoJuego instanceof ModoLimiteTiempo) {
                     player1.setPiedrasPesadas(10);
-                    System.out.println("No tienes piedras pesadas");
-                    return validarCantidadPiedras();
+                    player1.ronda(tipoPiedra);
+                    return validarCantidadPiedras(tipoPiedra);
                 } else {
-                    mensaje("No tienes piedras pesadas " + player1.getName());
+                    mensaje("No tienes piedras " + tipoPiedra + " " + player1.getName());
                     hayMensaje = true;
                     turno = "Negra";
                     return false;
                 }
             }
         } else {
-            if (player2.getPiedrasPesadas() > 0) {
-                player2.ronda("Pesada");
+            if (player2.getPiedrasPesadas() > 0 || player2.getPiedrasLigeras() > 0) {
+                player2.ronda(tipoPiedra);
                 return true;
             } else {
-                if (modoJuego instanceof ModoNormal) {
+                if (modoJuego instanceof ModoNormal || modoJuego instanceof ModoLimiteTiempo) {
                     player2.setPiedrasPesadas(10);
-                    return validarCantidadPiedras();
+                    return validarCantidadPiedras(tipoPiedra);
 
                 } else {
-                    mensaje("No tienes piedras pesadas " + player2.getName());
+                    mensaje("No tienes piedras pesadas " + tipoPiedra + " " + player2.getName());
                     hayMensaje = true;
                     turno = "Blanca";
                     return false;
@@ -573,7 +569,7 @@ public class Gomoku {
         }
     }
 
-    public void imprimirTablero() {
+    public static void imprimirTablero() {
         System.out.println("Tablero actual:");
 
         for (int i = 0; i < Board.HEIGHT; i++) {
