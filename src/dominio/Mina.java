@@ -43,15 +43,15 @@ public class Mina extends Celda {
     private void calcularPuntos(boolean propia) {
         if (propia) {
             if (Gomoku.getTurno().equals("Blanca")) {
-                Gomoku.getPlayer1().addScore(-50);
+                Gomoku.getInstance().getPlayer1().addScore(-50);
             } else {
-                Gomoku.getPlayer2().addScore(-50);
+                Gomoku.getInstance().getPlayer2().addScore(-50);
             }
         } else {
             if (Gomoku.getTurno().equals("Blanca")) {
-                Gomoku.getPlayer1().addScore(50);
+                Gomoku.getInstance().getPlayer1().addScore(50);
             } else {
-                Gomoku.getPlayer2().addScore(50);
+                Gomoku.getInstance().getPlayer2().addScore(50);
             }
         }
     }
