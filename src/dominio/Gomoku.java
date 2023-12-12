@@ -400,9 +400,9 @@ public class Gomoku {
     public void setModoDeJuego(String modoDeJuegoElegido) {
         if (modoDeJuegoElegido.equals("Normal")) {
             modoJuego = new ModoNormal();
-        } else if (modoDeJuegoElegido.equals("LimiteTiempo")) {
+        } else if (modoDeJuegoElegido.equals("Tiempo")) {
             modoJuego = new ModoLimiteTiempo();
-        } else if (modoDeJuegoElegido.equals("LimiteFichas")) {
+        } else if (modoDeJuegoElegido.equals("Limite de fichas")) {
             modoJuego = new ModoLimiteFichas();
         } else {
             modoJuego = new ModoNormal();
@@ -443,6 +443,7 @@ public class Gomoku {
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
             player1 = new MaquinaExpertaPlayer(NombreJugador1, "Blanca");
         }
+        player1.setPiedrasPesadas(10);
     }
 
     /**
@@ -462,6 +463,7 @@ public class Gomoku {
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
             player2 = new MaquinaExpertaPlayer(NombreJugador1, "Negra");
         }
+        player2.setPiedrasPesadas(10);
     }
 
     /**
@@ -543,10 +545,12 @@ public class Gomoku {
             } else {
                 if (modoJuego instanceof ModoNormal) {
                     player1.setPiedrasPesadas(10);
+                    System.out.println("No tienes piedras pesadas");
                     return validarCantidadPiedras();
                 } else {
-                    mensaje("No tienes piedras pesadas");
+                    mensaje("No tienes piedras pesadas " + player1.getName());
                     hayMensaje = true;
+                    turno = "Negra";
                     return false;
                 }
             }
@@ -558,9 +562,11 @@ public class Gomoku {
                 if (modoJuego instanceof ModoNormal) {
                     player2.setPiedrasPesadas(10);
                     return validarCantidadPiedras();
+
                 } else {
-                    mensaje("No tienes piedras pesadas");
+                    mensaje("No tienes piedras pesadas " + player2.getName());
                     hayMensaje = true;
+                    turno = "Blanca";
                     return false;
                 }
             }

@@ -432,42 +432,39 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	 * Además, inicia el temporizador del juego según la configuración.
 	 */
 	public static void welcomeScreen() {
+		firstName = JOptionPane.showInputDialog(null,
+				"Bienvenido a GOMOKU!", "Ingresa el nombre del jugador uno");
+		firstName = firstName == null ? "Primer jugador" : firstName;
+		firstName = firstName.equals("Ingresa el nombre jugador 1") ? "Primer jugador"
+				: firstName;
+
+		infoComponent.clearInfo();
+		Gomoku.getInstance().getPlayer1().setName(firstName);
+		/*
+		 * Si el jugador elige jugar contra la computadora, entonces después de él, es
+		 * decir,
+		 * el primer jugador, ingresa el nombre, comienza el temporizador del juego.
+		 */
 		if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
-			firstName = JOptionPane.showInputDialog(null,
-					"Bienvenido a GOMOKU!", "Ingresa el nombre del jugador uno");
-			firstName = firstName == null ? "Primer jugador" : firstName;
-			firstName = firstName.equals("Ingresa el nombre jugador 1") ? "Primer jugador"
-					: firstName;
+			TimerComponent.getTimer().start();
+			Gomoku.getInstance().getPlayer2().setName("Computador");
+		}
 
-			infoComponent.clearInfo();
-			Gomoku.getPlayer1().setName(firstName);
-			/*
-			 * Si el jugador elige jugar contra la computadora, entonces después de él, es
-			 * decir,
-			 * el primer jugador, ingresa el nombre, comienza el temporizador del juego.
-			 */
-			if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
-				TimerComponent.getTimer().start();
-				Gomoku.getPlayer2().setName("Computador");
-			}
-
-			/*
-			 * Si no juega contra la computadora, entonces el segundo jugador ingresa su
-			 * nombre
-			 * y después de ingresar el nombre, comienza el temporizador del juego.
-			 */
-			if (Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer) {
-				secondName = JOptionPane.showInputDialog(null,
-						"Bienvenido a GOMOKU!", "Ingresa el nombre  del jugador dos");
-				secondName = secondName == null ? "Segundo jugador" : secondName;
-				secondName = secondName.equals("Ingresa el nombre jugador 2") ? "Segundo jugador"
-						: secondName;
-				Gomoku.getPlayer2().setName(secondName);
-				TimerComponent.getTimer().start();
-			}
-		} else {
+		/*
+		 * Si no juega contra la computadora, entonces el segundo jugador ingresa su
+		 * nombre
+		 * y después de ingresar el nombre, comienza el temporizador del juego.
+		 */
+		if (Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer) {
+			secondName = JOptionPane.showInputDialog(null,
+					"Bienvenido a GOMOKU!", "Ingresa el nombre  del jugador dos");
+			secondName = secondName == null ? "Segundo jugador" : secondName;
+			secondName = secondName.equals("Ingresa el nombre jugador 2") ? "Segundo jugador"
+					: secondName;
+			Gomoku.getPlayer2().setName(secondName);
 			TimerComponent.getTimer().start();
 		}
+		TimerComponent.getTimer().start();
 
 	}
 
@@ -481,6 +478,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		gomokuGUI.remove(infoComponent);
 		gomokuGUI.remove(buttonComponent);
 		gomokuGUI.remove(timerComponent);
+		Gomoku.getInstance().setSeEncontroGanador(false);
 
 		constructMainDisplay();
 

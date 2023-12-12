@@ -59,13 +59,13 @@ public class GameController implements ActionListener {
 				info.setText("Turno: " + GomokuGUI.getFirstName()
 						+ " |   Color ficha: Negra  | Total movimientos: "
 						+ numStep + " | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer1().getScore());
+				System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
 			} else {
 				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 				info.setText("Turno: " + GomokuGUI.getSecondName()
 						+ " |   Color ficha: Blanca  | Total movimientos: "
 						+ numStep + " | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer2().getScore());
+				System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
 			}
 
 			// if (cell.getColor() == Cell.EMPTY) {
@@ -174,15 +174,18 @@ public class GameController implements ActionListener {
 
 	/**
 	 * 
-	 * method ini dipanggil ketika perminan dimulai ulang,
-	 * method ini mensetting nilai-nilai serta tampilan kembali
-	 * ke semula sebelum permainan dimulai
+	 * metodo Que reinicia el juego
 	 * 
 	 */
 	public static void restartGame() {
 		numStep = 0;
 		rowOfWin.clear();
 		colOfWin.clear();
+		Gomoku.getInstance().setHayMensjae(false);
+		Gomoku.getInstance().getPlayer1().setPiedrasPesadas(10);
+		Gomoku.getInstance().getPlayer1().setPiedrasLigeras(10);
+		Gomoku.getInstance().getPlayer2().setPiedrasPesadas(10);
+		Gomoku.getInstance().getPlayer2().setPiedrasLigeras(10);
 		TimerComponent.getTimer().stop();
 		TimerComponent.resetTimer();
 		Gomoku.getInstance().crearBoard(3, 3);

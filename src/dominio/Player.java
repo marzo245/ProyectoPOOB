@@ -81,9 +81,9 @@ public abstract class Player {
      */
     public void ronda(String tipoPiedra) {
         if (tipoPiedra.equals("Pesada")) {
-            piedras[0]--;
+            piedras[0] -= 1;
         } else {
-            piedras[1]--;
+            piedras[1] -= 1;
         }
     }
 
