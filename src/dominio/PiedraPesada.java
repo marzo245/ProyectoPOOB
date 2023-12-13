@@ -12,8 +12,8 @@ public class PiedraPesada extends Piedra {
     /**
      * Constructor de la clase
      */
-    public PiedraPesada() {
-        super();
+    public PiedraPesada(int row, int col) {
+        super(row, col);
         super.vida = -1;
     }
 

@@ -61,10 +61,10 @@ public class GameController implements ActionListener {
 				for (int j = 0; j < Board.HEIGHT; j++) {
 					if (temp[i][j] instanceof Ocupada) {
 						if (temp[i][j].getPiedra().getName().equals("Blanca")) {
-							lastColor = Cell.BLACK;
+							// lastColor = Cell.BLACK;
 							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);
 						} else {
-							lastColor = Cell.WHITE;
+							// lastColor = Cell.WHITE;
 							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.BLACK);
 						}
 					} else if (temp[i][j] instanceof Mina) {
@@ -86,18 +86,12 @@ public class GameController implements ActionListener {
 			if (Gomoku.getTurno().equals("Blanca")) {
 				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 				info.setText("Turno: " + GomokuGUI.getFirstName()
-						+ " |   Color ficha: Negra  | totalPiedrasPesadas:"
-						+ Gomoku.getInstance().getPlayer2().getPiedrasPesadas() +
-						" totalPiedrasLigeras" + Gomoku.getInstance().getPlayer2().getPiedrasLigeras() +
-						" | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
+						+ " |   Color ficha: Negra | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
 				System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
 			} else {
 				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 				info.setText("Turno: " + GomokuGUI.getSecondName()
-						+ " |   Color ficha: Blanca  	| totalPiedrasPesadas:"
-						+ Gomoku.getInstance().getPlayer2().getPiedrasPesadas() +
-						" totalPiedrasLigeras" + Gomoku.getInstance().getPlayer2().getPiedrasLigeras()
-						+ " | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
+						+ " |   Color ficha: Blanca   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
 				System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
 			}
 
@@ -110,7 +104,7 @@ public class GameController implements ActionListener {
 						"Evento", JOptionPane.INFORMATION_MESSAGE);
 				Gomoku.getInstance().setHayMensjae(false);
 			}
-
+			TypeOfRock.actualizarTextoBotones();
 			Gomoku.getInstance().imprimirTablero();
 		} else {
 			JOptionPane.showMessageDialog(null,
@@ -201,6 +195,7 @@ public class GameController implements ActionListener {
 		GomokuGUI.getBoardComponent().clearBoard();
 		Gomoku.getInstance().setSeEncontroGanador(false);
 		GomokuGUI.getInfoComponent().clearInfo();
+		TypeOfRock.actualizarTextoBotones();
 	}
 
 	/*

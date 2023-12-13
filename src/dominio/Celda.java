@@ -33,11 +33,11 @@ public abstract class Celda {
      * 
      * @param piedra es un objeto de tipo Piedra.
      */
-    public void setPiedra(String tipoPiedra) {
+    public void setPiedra(String tipoPiedra, int row, int col) {
         if (tipoPiedra.equals("PiedraPesada")) {
-            piedra = new PiedraPesada();
+            piedra = new PiedraPesada(row, col);
         } else if (tipoPiedra.equals("PiedraLigera")) {
-            piedra = new PiedraLigera();
+            piedra = new PiedraLigera(row, col);
         } else
             piedra = new PiedraVacia();
     }

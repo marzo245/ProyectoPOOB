@@ -13,7 +13,7 @@ public class PiedraVacia extends Piedra {
      * Constructor de la clase
      */
     public PiedraVacia() {
-        super();
+        super(row, col);
         super.vida = -1;
     }
 

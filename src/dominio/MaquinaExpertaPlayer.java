@@ -28,7 +28,7 @@ public class MaquinaExpertaPlayer extends Player {
                 if (tablero[i][j] instanceof Vacia) {
                     // Simular la jugada
                     tablero[i][j] = new Ocupada();
-                    tablero[i][j].setPiedra(new PiedraPesada());
+                    tablero[i][j].setPiedra(new PiedraPesada(i, j));
                     // Evaluar la bondad de la jugada
                     int evaluacion = evaluarTablero(tablero, color);
 

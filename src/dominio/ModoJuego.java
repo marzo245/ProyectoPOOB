@@ -56,10 +56,10 @@ public abstract class ModoJuego {
                 // Si es PiedraVacia, crea una nueva instancia de Piedra y asígnale el nombre
                 Piedra nuevaPiedra;
                 if (tipoPiedra.equals("PiedraPesada")) {
-                    nuevaPiedra = new PiedraPesada();
+                    nuevaPiedra = new PiedraPesada(row, col);
                 } else {
                     // Agrega condiciones para otros tipos de piedra si es necesario
-                    nuevaPiedra = new PiedraLigera();
+                    nuevaPiedra = new PiedraLigera(row, col);
                 }
                 nuevaPiedra.setName(Gomoku.getTurno());
 

@@ -480,6 +480,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		gomokuGUI.remove(infoComponent);
 		gomokuGUI.remove(buttonComponent);
 		gomokuGUI.remove(timerComponent);
+		gomokuGUI.remove(typeRock);
 		Gomoku.getInstance().setSeEncontroGanador(false);
 
 		constructMainDisplay();

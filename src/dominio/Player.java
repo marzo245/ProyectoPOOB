@@ -48,7 +48,15 @@ public abstract class Player {
      * 
      */
     public void setPiedrasPesadas(int a) {
-        this.piedras[0] += a;
+        this.piedras[0] = a;
+    }
+
+    public int getPiedras(String tipoPiedra) {
+        if (tipoPiedra.equals("Pesada")) {
+            return this.piedras[0];
+        } else {
+            return this.piedras[1];
+        }
     }
 
     /**
@@ -64,7 +72,7 @@ public abstract class Player {
      * 
      */
     public void setPiedrasLigeras(int a) {
-        this.piedras[1] += a;
+        this.piedras[1] = a;
     }
 
     /**
@@ -80,7 +88,7 @@ public abstract class Player {
      * 
      */
     public void ronda(String tipoPiedra) {
-        if (tipoPiedra.equals("Pesada")) {
+        if (tipoPiedra.equals("Piedra pesada")) {
             piedras[0] -= 1;
         } else {
             piedras[1] -= 1;

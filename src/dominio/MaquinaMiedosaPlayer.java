@@ -32,7 +32,7 @@ public class MaquinaMiedosaPlayer extends Player {
 
                     // Evaluar la jugada simulando poner una ficha en esa posición
                     tablero[i][j] = new Ocupada();
-                    tablero[i][j].setPiedra(new PiedraPesada());
+                    tablero[i][j].setPiedra(new PiedraPesada(i, j));
                     // Evaluar la bondad de la jugada
                     int evaluacion = distancia; // Cambiado a distancia para buscar la posición más lejana
 

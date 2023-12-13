@@ -440,6 +440,7 @@ public class Gomoku {
             player1 = new MaquinaExpertaPlayer(NombreJugador1, "Blanca");
         }
         player1.setPiedrasPesadas(10);
+        player1.setPiedrasLigeras(10);
     }
 
     /**
@@ -460,6 +461,7 @@ public class Gomoku {
             player2 = new MaquinaExpertaPlayer(NombreJugador1, "Negra");
         }
         player2.setPiedrasPesadas(10);
+        player2.setPiedrasLigeras(10);
     }
 
     /**
@@ -541,6 +543,7 @@ public class Gomoku {
             } else {
                 if (modoJuego instanceof ModoNormal || modoJuego instanceof ModoLimiteTiempo) {
                     player1.setPiedrasPesadas(10);
+                    player1.setPiedrasLigeras(10);
                     player1.ronda(tipoPiedra);
                     return validarCantidadPiedras(tipoPiedra);
                 } else {
@@ -557,6 +560,7 @@ public class Gomoku {
             } else {
                 if (modoJuego instanceof ModoNormal || modoJuego instanceof ModoLimiteTiempo) {
                     player2.setPiedrasPesadas(10);
+                    player2.setPiedrasLigeras(10);
                     return validarCantidadPiedras(tipoPiedra);
 
                 } else {

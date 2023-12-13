@@ -12,8 +12,8 @@ public class PiedraLigera extends Piedra {
     /**
      * Constructor de la clase
      */
-    public PiedraLigera() {
-        super();
+    public PiedraLigera(int row, int col) {
+        super(row, col);
         super.vida = 3;
     }
 
@@ -22,7 +22,7 @@ public class PiedraLigera extends Piedra {
      */
     public void ronda() {
         if (super.vida == 0) {
-            Gomoku.getCelda(row, col).setPiedra("MURIO");
+            Gomoku.getCelda(row, col).setPiedra(new PiedraVacia());
         }
         super.vida -= 1;
     }

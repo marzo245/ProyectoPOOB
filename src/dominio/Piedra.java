@@ -12,6 +12,14 @@ public abstract class Piedra {
     protected static int col;
 
     /**
+     * Constructor de la clase
+     */
+    public Piedra(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
+    /**
      * Define una nueva vida para la piedra.
      * 
      * @param a nueva vida de la piedra.
