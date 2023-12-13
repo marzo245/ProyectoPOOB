@@ -13,6 +13,7 @@ import dominio.Gomoku;
 public class TypeOfRock extends JPanel implements ActionListener {
     private static JButton piedraPesada;
     private static JButton piedraLigera;
+    private static boolean elijioTipoDePiedra = false;
 
     /**
      * Constructor de la clase ButtonComponent.
@@ -21,7 +22,7 @@ public class TypeOfRock extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         piedraPesada = new JButton("Piedra Pesada");
         piedraPesada.addActionListener(this);
-        piedraPesada.setForeground(Color.RED);
+        piedraPesada.setForeground(Color.ORANGE);
         piedraPesada.setFont(new Font("SansSerif", Font.PLAIN, 50));
         piedraPesada.setOpaque(false);
         piedraPesada.setContentAreaFilled(false);
@@ -29,7 +30,7 @@ public class TypeOfRock extends JPanel implements ActionListener {
         piedraPesada.setText("Piedras pesadas :" + Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
         piedraLigera = new JButton("Piedra Ligera");
         piedraLigera.addActionListener(this);
-        piedraLigera.setForeground(Color.RED);
+        piedraLigera.setForeground(Color.ORANGE);
         piedraLigera.setFont(new Font("SansSerif", Font.PLAIN, 50));
         piedraLigera.setOpaque(false);
         piedraLigera.setContentAreaFilled(false);
@@ -55,14 +56,27 @@ public class TypeOfRock extends JPanel implements ActionListener {
                             "Ponla en una celda vacía!",
                     "Advertencia esta piedra nunca muere", JOptionPane.WARNING_MESSAGE);
             GameController.setPiedra("Piedra pesada");
+            elijioTipoDePiedra = true;
         } else if (e.getSource() == piedraLigera) {
             JOptionPane.showMessageDialog(null,
                     "Elegiste la piedra ligera.\nPonla en una celda vacía!",
                     "Advertencia tiene 3 vidas de turno", JOptionPane.WARNING_MESSAGE);
             GameController.setPiedra("Piedra ligera");
+            elijioTipoDePiedra = true;
         }
     }
 
+    public static void setElijioTipoDePiedra(boolean newElijioTipoDePiedra) {
+        elijioTipoDePiedra = newElijioTipoDePiedra;
+    }
+
+    public static boolean getElijioTipoDePiedra() {
+        return elijioTipoDePiedra;
+    }
+
+    /**
+     * Este método actualiza el texto de los botones de esta clase.
+     */
     public static void actualizarTextoBotones() {
         if (Gomoku.getInstance().getTurno().equals("Blanca")) {
             piedraPesada.setText("Piedras pesadas :" + Gomoku.getInstance().getPlayer1().getPiedrasPesadas());

@@ -564,7 +564,7 @@ public class Gomoku {
                     return validarCantidadPiedras(tipoPiedra);
 
                 } else {
-                    mensaje("No tienes piedras pesadas " + tipoPiedra + " " + player2.getName());
+                    mensaje("No tienes piedras " + tipoPiedra + " " + player2.getName());
                     hayMensaje = true;
                     turno = "Blanca";
                     return false;

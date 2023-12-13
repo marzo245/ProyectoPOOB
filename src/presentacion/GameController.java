@@ -54,58 +54,64 @@ public class GameController implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent event) {
 		if (cell.getEnableClick()) {
+			if (TypeOfRock.getElijioTipoDePiedra()) {
+				// if (cell.getColor() == Cell.EMPTY) {
+				Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
+				for (int i = 0; i < Board.WIDTH; i++) {
+					for (int j = 0; j < Board.HEIGHT; j++) {
+						if (temp[i][j] instanceof Ocupada) {
+							if (temp[i][j].getPiedra().getName().equals("Blanca")) {
+								// lastColor = Cell.BLACK;
+								GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);
+							} else {
+								// lastColor = Cell.WHITE;
+								GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.BLACK);
+							}
+						} else if (temp[i][j] instanceof Mina) {
+							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.MiINE);
+							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+						} else if (temp[i][j] instanceof Teleport) {
+							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.TELEPORT);
+							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+						} else if (temp[i][j] instanceof Vacia) {
+							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.EMPTY);
+							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
 
-			// if (cell.getColor() == Cell.EMPTY) {
-			Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
-			for (int i = 0; i < Board.WIDTH; i++) {
-				for (int j = 0; j < Board.HEIGHT; j++) {
-					if (temp[i][j] instanceof Ocupada) {
-						if (temp[i][j].getPiedra().getName().equals("Blanca")) {
-							// lastColor = Cell.BLACK;
-							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);
 						} else {
-							// lastColor = Cell.WHITE;
-							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.BLACK);
+							GomokuGUI.getBoardComponent().getCells()[i][j].setEnabled(true);
 						}
-					} else if (temp[i][j] instanceof Mina) {
-						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.MiINE);
-						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
-					} else if (temp[i][j] instanceof Teleport) {
-						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.TELEPORT);
-						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
-					} else if (temp[i][j] instanceof Vacia) {
-						GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.EMPTY);
-						GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
 
-					} else {
-						GomokuGUI.getBoardComponent().getCells()[i][j].setEnabled(true);
 					}
-
 				}
-			}
-			if (Gomoku.getTurno().equals("Blanca")) {
-				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-				info.setText("Turno: " + GomokuGUI.getFirstName()
-						+ " |   Color ficha: Negra | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
-			} else {
-				JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-				info.setText("Turno: " + GomokuGUI.getSecondName()
-						+ " |   Color ficha: Blanca   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
-				System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
-			}
+				if (Gomoku.getTurno().equals("Blanca")) {
+					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+					info.setText("Turno: " + GomokuGUI.getFirstName()
+							+ " |   Color ficha: Blanca | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
+					System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
+				} else {
+					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+					info.setText("Turno: " + GomokuGUI.getSecondName()
+							+ " |   Color ficha: Negra   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
+					System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
+				}
 
-			GomokuGUI.getBoardComponent().repaint();
-			checkWinner(cell.getRow(), cell.getCol());
-			checkCellAvailability();
-			if (Gomoku.getInstance().getHayMensaje()) {
+				GomokuGUI.getBoardComponent().repaint();
+				checkWinner(cell.getRow(), cell.getCol());
+				checkCellAvailability();
+				if (Gomoku.getInstance().getHayMensaje()) {
+					JOptionPane.showMessageDialog(null,
+							Gomoku.getInstance().getMensaje(),
+							"Evento", JOptionPane.INFORMATION_MESSAGE);
+					Gomoku.getInstance().setHayMensjae(false);
+				}
+				TypeOfRock.actualizarTextoBotones();
+				Gomoku.getInstance().imprimirTablero();
+				TypeOfRock.setElijioTipoDePiedra(false);
+			} else {
 				JOptionPane.showMessageDialog(null,
-						Gomoku.getInstance().getMensaje(),
-						"Evento", JOptionPane.INFORMATION_MESSAGE);
-				Gomoku.getInstance().setHayMensjae(false);
+						"Por favor elija el tipo de piedra que desea jugar!",
+						"Advertencia", JOptionPane.WARNING_MESSAGE);
 			}
-			TypeOfRock.actualizarTextoBotones();
-			Gomoku.getInstance().imprimirTablero();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Celda ocupada.\nPor favor vuelva a elegir otra celda!",
