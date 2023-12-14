@@ -45,7 +45,7 @@ public abstract class ModoJuego {
     public Celda[][] ponerPiedra(int row, int col, String tipoPiedra) {
         if (validarPosicion(row, col)) {
 
-            Gomoku.getInstance().setCelda(row, col, new Ocupada());
+            Gomoku.setCelda(row, col, new Ocupada());
 
             // Obtén la celda actual y la piedra asociada
             Celda celda = Gomoku.getCelda(row, col);
@@ -100,4 +100,6 @@ public abstract class ModoJuego {
 
         return false;
     }
+
+    protected abstract boolean validarCantidadPiedras(String tipoPiedra);
 }

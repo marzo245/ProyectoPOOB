@@ -34,9 +34,9 @@ public abstract class Celda {
      * @param piedra es un objeto de tipo Piedra.
      */
     public void setPiedra(String tipoPiedra, int row, int col) {
-        if (tipoPiedra.equals("PiedraPesada")) {
+        if (tipoPiedra.equals("Piedra Pesada")) {
             piedra = new PiedraPesada(row, col);
-        } else if (tipoPiedra.equals("PiedraLigera")) {
+        } else if (tipoPiedra.equals("Piedra Ligera")) {
             piedra = new PiedraLigera(row, col);
         } else
             piedra = new PiedraVacia();
@@ -83,5 +83,4 @@ public abstract class Celda {
             // Puedes ajustar esto según tu lógica para representar otras celdas
             return "X";
     }
-
 }

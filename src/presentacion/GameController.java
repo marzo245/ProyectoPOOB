@@ -55,7 +55,6 @@ public class GameController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (cell.getEnableClick()) {
 			if (TypeOfRock.getElijioTipoDePiedra()) {
-				// if (cell.getColor() == Cell.EMPTY) {
 				Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
 				for (int i = 0; i < Board.WIDTH; i++) {
 					for (int j = 0; j < Board.HEIGHT; j++) {
@@ -197,7 +196,6 @@ public class GameController implements ActionListener {
 		Gomoku.getInstance().getPlayer2().setPiedrasLigeras(10);
 		TimerComponent.getTimer().stop();
 		TimerComponent.resetTimer();
-		Gomoku.getInstance().crearBoard(3, 3);
 		GomokuGUI.getBoardComponent().clearBoard();
 		Gomoku.getInstance().setSeEncontroGanador(false);
 		GomokuGUI.getInfoComponent().clearInfo();

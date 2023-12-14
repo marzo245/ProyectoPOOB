@@ -83,6 +83,7 @@ public class BoardComponent extends JPanel {
 		cells = new CellComponent[Board.HEIGHT][Board.WIDTH];
 
 		cells = new CellComponent[Board.HEIGHT][Board.WIDTH];
+		Gomoku.getInstance().clearBoard();
 		Celda[][] board = Gomoku.getBoard();
 		for (int i = 0; i < Board.HEIGHT; i++) {
 			for (int j = 0; j < Board.WIDTH; j++) {

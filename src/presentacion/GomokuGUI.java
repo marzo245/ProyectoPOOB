@@ -369,11 +369,11 @@ public class GomokuGUI extends JFrame implements ActionListener {
 
 			buttonComponent = new ButtonComponent();
 			timerComponent = new TimerComponent();
-
+			typeRock = new TypeOfRock();
 			add(infoComponent, BorderLayout.NORTH);
 			add(buttonComponent, BorderLayout.SOUTH);
 			add(timerComponent, BorderLayout.WEST);
-
+			add(typeRock, BorderLayout.EAST);
 			revalidate();
 			boardComponent.setBounds((panel.getWidth() - boardSize.width) / 2,
 					(panel.getHeight() - boardSize.height) / 2, boardSize.width, boardSize.height);

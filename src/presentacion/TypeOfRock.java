@@ -55,13 +55,13 @@ public class TypeOfRock extends JPanel implements ActionListener {
                     "Elegiste la piedra pesada.\\n" + //
                             "Ponla en una celda vacía!",
                     "Advertencia esta piedra nunca muere", JOptionPane.WARNING_MESSAGE);
-            GameController.setPiedra("Piedra pesada");
+            GameController.setPiedra("Piedra Pesada");
             elijioTipoDePiedra = true;
         } else if (e.getSource() == piedraLigera) {
             JOptionPane.showMessageDialog(null,
                     "Elegiste la piedra ligera.\nPonla en una celda vacía!",
                     "Advertencia tiene 3 vidas de turno", JOptionPane.WARNING_MESSAGE);
-            GameController.setPiedra("Piedra ligera");
+            GameController.setPiedra("Piedra Ligera");
             elijioTipoDePiedra = true;
         }
     }
