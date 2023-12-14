@@ -39,10 +39,12 @@ public class ModoLimiteFichas extends ModoJuego {
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Negra");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Blanca");
                         return false;
                     } else {
                         Gomoku.getInstance().mensaje("Te quedaste sin piedras pesadas");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Blanca");
                         return false;
                     }
                 } else {
@@ -56,10 +58,12 @@ public class ModoLimiteFichas extends ModoJuego {
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Negra");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Blanca");
                         return false;
                     } else {
                         Gomoku.getInstance().mensaje("Te quedaste sin piedras ligeras");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Blanca");
                         return false;
                     }
                 } else {
@@ -75,10 +79,12 @@ public class ModoLimiteFichas extends ModoJuego {
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Blanca");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Negra");
                         return false;
                     } else {
                         Gomoku.getInstance().mensaje("Te quedaste sin piedras pesadas");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Negra");
                         return false;
                     }
                 } else {
@@ -92,10 +98,12 @@ public class ModoLimiteFichas extends ModoJuego {
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Blanca");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Negra");
                         return false;
                     } else {
                         Gomoku.getInstance().mensaje("Te quedaste sin piedras ligeras");
                         Gomoku.getInstance().setHayMensjae(true);
+                        Gomoku.getInstance().setTurno("Negra");
                         return false;
                     }
                 } else {

@@ -46,11 +46,11 @@ public class GomokuTest {
         juego.jugada(0, 0); // j1
         juego.jugada(0, 1); // j2
         juego.jugada(1, 0); // j1
-        juego.jugada(1, 1); // j2
+        juego.jugada(0, 2); // j2
         juego.jugada(2, 0); // j1
-        juego.jugada(2, 1); // j2
+        juego.jugada(0, 3); // j2
         juego.jugada(3, 0); // j1
-        juego.jugada(3, 1); // j2
+        juego.jugada(0, 4); // j2
         juego.jugada(4, 0); // j1
 
         // Comprueba si se ha encontrado un ganador

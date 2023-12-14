@@ -95,6 +95,7 @@ public class GameController implements ActionListener {
 				}
 
 				GomokuGUI.getBoardComponent().repaint();
+				checkCellAvailability();
 				checkWinner(cell.getRow(), cell.getCol());
 				checkCellAvailability();
 				if (Gomoku.getInstance().getHayMensaje()) {
@@ -121,6 +122,21 @@ public class GameController implements ActionListener {
 
 	public static void setPiedra(String newPiedra) {
 		tipoDePiedra = newPiedra;
+	}
+
+	public void checkWinneroffTime() {
+		if (Gomoku.getInstance().getSeEncontroGanador()) {
+			cellDisableClick();
+			cell.setIsCellOfWin(true);
+			notifyWinner();
+			TimerComponent.getTimer().stop();
+			int[][] win = Gomoku.getInstance().getPosicionesGanadoras();
+			for (int i = 0; i < 5; i++) {
+				BoardComponent.getCells()[win[0][i]][win[1][i]].setIsCellOfWin(true);
+				System.out.print(win[0][i] + " " + win[1][i] + " ");
+			}
+
+		}
 	}
 
 	/**
