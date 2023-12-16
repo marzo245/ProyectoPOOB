@@ -59,6 +59,7 @@ public class GameController implements ActionListener {
 				for (int i = 0; i < Board.WIDTH; i++) {
 					for (int j = 0; j < Board.HEIGHT; j++) {
 						if (temp[i][j] instanceof Ocupada) {
+							cell.setTipoDePiedra(tipoDePiedra);
 							if (temp[i][j].getPiedra().getName().equals("Blanca")) {
 								// lastColor = Cell.BLACK;
 								GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);

@@ -19,7 +19,7 @@ import java.awt.RenderingHints;
 import javax.swing.JButton;
 
 public class CellComponent extends JButton {
-
+	private String tipoDePiedra = "Null";
 	private int row;
 	private int col;
 	private Cell color;
@@ -108,6 +108,10 @@ public class CellComponent extends JButton {
 		isCellOfWin = value;
 	}
 
+	public void setTipoDePiedra(String tipoDePiedra) {
+		this.tipoDePiedra = tipoDePiedra;
+	}
+
 	/**
 	 * 
 	 * Método getter para obtener información sobre si la celda se puede clickear o
@@ -174,6 +178,16 @@ public class CellComponent extends JButton {
 		 * entonces se vuelve a dibujar y se agrega un borde para
 		 * resaltar qué celdas son parte de la disposición ganadora.
 		 */
+		if (tipoDePiedra.equals("Piedra Pesada")) {
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(Color.ORANGE);
+			g2.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
+		} else if (tipoDePiedra.equals("Piedra Ligera")) {
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(Color.GREEN);
+			g2.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
+		}
+
 		if (isCellOfWin) {
 			if (color == Cell.BLACK) {
 				g2.setColor(Color.BLACK);
