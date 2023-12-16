@@ -115,7 +115,7 @@ public abstract class ModoJuego {
                     if (board[i][j].getPiedra() instanceof PiedraLigera) {
                         if (board[i][j].getPiedra().getVida() == 0) {
                             System.out.print("Piedra ligera muerta en: " + i + " " + j
-                                    + board[i][j].getPiedra().getVida() + "\n");
+                                    + " " + board[i][j].getPiedra().getVida() + "\n");
                             board[i][j] = new Vacia();
                         }
                     }

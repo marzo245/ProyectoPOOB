@@ -85,12 +85,12 @@ public class Gomoku {
         if (turno.equals("Blanca")) {
             if (!(player2 instanceof HumanoPlayer)) {
                 temporal = player1.jugar(row, col, tipoPiedra);
-                checkWinner(row, col);
+                checkWinner(row, col, "Blanca");
                 Gomoku.getInstance().setBoard(temporal); // Actualiza el tablero en Gomoku
                 if (!SeEncontroGanador) {
                     player2.jugar(row, col, mensajeSalida);
-                    checkWinner(row, col);
                     turno = "Blanca";
+                    checkWinner(row, col, "Negra");
                 }
 
                 return temporal;
@@ -98,7 +98,7 @@ public class Gomoku {
                 temporal = player1.jugar(row, col, tipoPiedra);
                 Gomoku.getInstance().setBoard(temporal);
                 turno = "Negra";
-                checkWinner(row, col);
+                checkWinner(row, col, "Blanca");
 
                 return temporal;
             }
@@ -106,7 +106,7 @@ public class Gomoku {
             temporal = player2.jugar(row, col, tipoPiedra);
             Gomoku.getInstance().setBoard(temporal);
             turno = "Blanca";
-            checkWinner(row, col);
+            checkWinner(row, col, "Negra");
 
             return temporal;
         }
@@ -137,22 +137,16 @@ public class Gomoku {
         this.SeEncontroGanador = SeEncontroGanador;
     }
 
-    public void checkWinner(int row, int col) {
-        for (int i = 0; i < Board.HEIGHT; i++) {
-            for (int j = 0; j < Board.WIDTH; j++) {
-                if (board[i][j] instanceof Ocupada) {
-                    if (board[i][j].getPiedra().getName().equals("Blanca")) {
-                        if (checkWinnerBlanca(i, j)) {
-                            SeEncontroGanador = true;
-                            ganador = "Blanca";
-                        }
-                    } else {
-                        if (checkWinnerNegra(i, j)) {
-                            SeEncontroGanador = true;
-                            ganador = "Negra";
-                        }
-                    }
-                }
+    public void checkWinner(int row, int col, String newTurno) {
+        if (newTurno.equals("Negra")) {
+            if (checkWinnerNegra(row, col)) {
+                setSeEncontroGanador(true);
+                setGanador("Negra");
+            }
+        } else {
+            if (checkWinnerBlanca(row, col)) {
+                setSeEncontroGanador(true);
+                setGanador("Blanca");
             }
         }
     }
@@ -166,188 +160,67 @@ public class Gomoku {
     }
 
     private boolean checkWinnerBlanca(int row, int col) {
-        int[][] posicionesGanadorasTemp = new int[2][5];
-        int contador = 0;
-
-        // Verificar hacia abajo
-        for (int i = row; i < Board.HEIGHT; i++) {
-            if (!(board[i][col] instanceof Ocupada) || !board[i][col].getPiedra().getName().equals("Blanca")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = col;
-            contador++;
-            if (board[i][col].getPiedra() instanceof PiedraPesada
-                    && board[i][col].getPiedra().getName().equals("Blanca")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                System.out.println(contador);
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar hacia la derecha
-        for (int j = col; j < Board.WIDTH; j++) {
-            if (!(board[row][j] instanceof Ocupada) || !board[row][j].getPiedra().getName().equals("Blanca")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = row;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[row][j].getPiedra() instanceof PiedraPesada
-                    && board[row][j].getPiedra().getName().equals("Blanca")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                System.out.println(contador);
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar diagonal inferior derecha
-        for (int i = row, j = col; i < Board.HEIGHT && j < Board.WIDTH; i++, j++) {
-            if (!(board[i][j] instanceof Ocupada) || !board[i][j].getPiedra().getName().equals("Blanca")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Blanca")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar diagonal inferior izquierda
-        for (int i = row, j = col; i < Board.HEIGHT && j >= 0; i++, j--) {
-            if (!(board[i][j] instanceof Ocupada) || !board[i][j].getPiedra().getName().equals("Blanca")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Blanca")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                System.out.println(contador);
-                return true;
-            }
-        }
-        return false;
+        return checkLine(row, col, 1, 0, "Blanca") || // Verificar hacia abajo
+                checkLine(row, col, 0, 1, "Blanca") || // Verificar hacia la derecha
+                checkLine(row, col, 1, 1, "Blanca") || // Verificar diagonal inferior derecha
+                checkLine(row, col, 1, -1, "Blanca") || // Verificar diagonal inferior izquierda
+                checkLine(row, col, -1, 0, "Blanca") || // Verificar hacia arriba
+                checkLine(row, col, 0, -1, "Blanca") || // Verificar hacia la izquierda
+                checkLine(row, col, -1, -1, "Blanca") || // Verificar diagonal superior izquierda
+                checkLine(row, col, -1, 1, "Blanca"); // Verificar diagonal superior derecha
     }
 
     private boolean checkWinnerNegra(int row, int col) {
-        int[][] posicionesGanadorasTemp = new int[2][5];
-        int contador = 0;
+        return checkLine(row, col, 1, 0, "Negra") || // Verificar hacia abajo
+                checkLine(row, col, 0, 1, "Negra") || // Verificar hacia la derecha
+                checkLine(row, col, 1, 1, "Negra") || // Verificar diagonal inferior derecha
+                checkLine(row, col, 1, -1, "Negra") || // Verificar diagonal inferior izquierda
+                checkLine(row, col, -1, 0, "Negra") || // Verificar hacia arriba
+                checkLine(row, col, 0, -1, "Negra") || // Verificar hacia la izquierda
+                checkLine(row, col, -1, -1, "Negra") || // Verificar diagonal superior izquierda
+                checkLine(row, col, -1, 1, "Negra"); // Verificar diagonal superior derecha
+    }
 
-        // Verificar hacia abajo
-        for (int i = row; i < Board.HEIGHT; i++) {
-            if (!(board[i][col] instanceof Ocupada) || !board[i][col].getPiedra().getName().equals("Negra")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = col;
-            if (board[i][col].getPiedra() instanceof PiedraPesada
-                    && board[i][col].getPiedra().getName().equals("Negra")) {
-                contador += 2;
+    private boolean checkLine(int row, int col, int rowIncrement, int colIncrement, String elTurno) {
+        int count = 0;
+
+        // Variables para almacenar las posiciones ganadoras
+        int[][] ganadoras = new int[2][5];
+        int ganadorasCount = 0;
+
+        // Verificar hacia adelante y hacia atrás
+        for (int i = -4; i <= 4; i++) {
+            int newRow = row + i * rowIncrement;
+            int newCol = col + i * colIncrement;
+
+            if (isValidPosition(newRow, newCol) &&
+                    board[newRow][newCol] instanceof Ocupada &&
+                    board[newRow][newCol].getPiedra().getName().equals(elTurno)) {
+                count++;
+
+                // Almacenar la posición ganadora
+                ganadoras[0][ganadorasCount] = newRow;
+                ganadoras[1][ganadorasCount] = newCol;
+                ganadorasCount++;
+
+                if (count >= 5) {
+                    // Si encontramos una línea ganadora, actualizamos el array posicionesGanadoras
+                    setPosicionesGanadoras(ganadoras);
+                    return true;
+                }
             } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar hacia la derecha
-        for (int j = col; j < Board.WIDTH; j++) {
-            if (!(board[row][j] instanceof Ocupada) || !board[row][j].getPiedra().getName().equals("Negra")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = row;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[row][j].getPiedra() instanceof PiedraPesada
-                    && board[row][j].getPiedra().getName().equals("Negra")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar diagonal inferior derecha
-        for (int i = row, j = col; i < Board.HEIGHT && j < Board.WIDTH; i++, j++) {
-            if (!(board[i][j] instanceof Ocupada) || !board[i][j].getPiedra().getName().equals("Negra")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Negra")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                return true;
-            }
-        }
-
-        // Reiniciar contador
-        contador = 0;
-
-        // Verificar diagonal inferior izquierda
-        for (int i = row, j = col; i < Board.HEIGHT && j >= 0; i++, j--) {
-            if (!(board[i][j] instanceof Ocupada) || !board[i][j].getPiedra().getName().equals("Negra")) {
-                break;
-            }
-            posicionesGanadorasTemp[0][contador] = i;
-            posicionesGanadorasTemp[1][contador] = j;
-            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Negra")) {
-                contador += 2;
-            } else {
-                contador += 1;
-            }
-            if (contador >= 5) {
-                posicionesGanadoras = posicionesGanadorasTemp;
-                return true;
+                // Si no encontramos una celda ocupada, reiniciamos el contador y la lista de
+                // ganadoras
+                count = 0;
+                ganadorasCount = 0;
             }
         }
 
         return false;
+    }
+
+    private boolean isValidPosition(int row, int col) {
+        return row >= 0 && row < Board.HEIGHT && col >= 0 && col < Board.WIDTH;
     }
 
     /**

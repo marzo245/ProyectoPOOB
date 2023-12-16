@@ -30,7 +30,6 @@ public class ModoLimiteFichas extends ModoJuego {
     }
 
     protected boolean validarCantidadPiedras(String tipoPiedra) {
-        System.out.println("validarCantidadPiedras " + tipoPiedra);
         if (Gomoku.getTurno().equals("Blanca")) {
             if (tipoPiedra.equals("Piedra Pesada")) {
                 if (Gomoku.getPlayer1().getPiedrasPesadas() == 0) {

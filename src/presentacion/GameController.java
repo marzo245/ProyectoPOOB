@@ -80,7 +80,7 @@ public class GameController implements ActionListener {
 						JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 						info.setText("Turno: " + GomokuGUI.getSecondName()
 								+ " |   Color ficha: Negra   | Puntaje: "
-								+ Gomoku.getInstance().getPlayer2().getScore());
+								+ GomokuGUI.gomoku.getPlayer2().getScore());
 						if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
 							TimerDownComponent.switchToTimer1();
 						} else {
@@ -124,10 +124,10 @@ public class GameController implements ActionListener {
 	}
 
 	public void checkWinneroffTime() {
-		if (Gomoku.getInstance().getSeEncontroGanador()) {
+		if (GomokuGUI.gomoku.getSeEncontroGanador()) {
 			cellDisableClick();
-			cell.setIsCellOfWin(true);
 			notifyWinner();
+
 			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
 				TimerDownComponent.getTimer().stop();
 				TimerDownComponent.getTimer2().stop();
@@ -135,12 +135,19 @@ public class GameController implements ActionListener {
 				TimerComponent.getTimer().stop();
 				TimerComponent.getTimer2().stop();
 			}
-			int[][] win = Gomoku.getInstance().getPosicionesGanadoras();
-			for (int i = 0; i < win.length; i++) {
-				BoardVisual.getCells()[win[0][i]][win[1][i]].setIsCellOfWin(true);
-				System.out.print(win[0][i] + " " + win[1][i] + " ");
-			}
 
+			int[][] posiciones = GomokuGUI.gomoku.getPosicionesGanadoras();
+
+			// Recorre las posiciones ganadoras y marca las celdas correspondientes como
+			// ganadoras
+			for (int i = 0; i < posiciones[0].length; i++) {
+				int row = posiciones[0][i];
+				int col = posiciones[1][i];
+
+				// Supongamos que miBoard tiene un método setCeldaOfWin que establece
+				// isCellOfWin(true)
+				GomokuGUI.getBoardVisual().getCells()[row][col].setIsCellOfWin(true);
+			}
 		}
 	}
 
@@ -194,6 +201,7 @@ public class GameController implements ActionListener {
 			TimerComponent.getTimer2().stop();
 			TimerComponent.resetTimer();
 		}
+		GomokuGUI.gomoku.setSeEncontroGanador(false);
 		GomokuGUI.getBoardVisual().clearBoard();
 		Gomoku.getInstance().setSeEncontroGanador(false);
 		GomokuGUI.getInfoComponent().clearInfo();

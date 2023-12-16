@@ -31,7 +31,6 @@ public class ModoNormal extends ModoJuego {
     }
 
     protected boolean validarCantidadPiedras(String tipoPiedra) {
-        System.out.println("validarCantidadPiedras " + tipoPiedra + " " + Gomoku.getTurno());
         if (Gomoku.getInstance().getTurno().equals("Blanca")) {
             if (tipoPiedra.equals("Piedra Pesada")) {
 
