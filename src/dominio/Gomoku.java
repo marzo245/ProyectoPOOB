@@ -92,12 +92,14 @@ public class Gomoku {
                     checkWinner(row, col);
                     turno = "Blanca";
                 }
+
                 return temporal;
             } else {
                 temporal = player1.jugar(row, col, tipoPiedra);
                 Gomoku.getInstance().setBoard(temporal);
                 turno = "Negra";
                 checkWinner(row, col);
+
                 return temporal;
             }
         } else {
@@ -105,6 +107,7 @@ public class Gomoku {
             Gomoku.getInstance().setBoard(temporal);
             turno = "Blanca";
             checkWinner(row, col);
+
             return temporal;
         }
 
@@ -337,6 +340,7 @@ public class Gomoku {
      * @return Tablero del juego
      */
     public static Celda[][] getBoard() {
+
         return board;
     }
 

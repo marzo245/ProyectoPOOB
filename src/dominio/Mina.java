@@ -61,7 +61,6 @@ public class Mina extends Celda {
      * 
      * @return Celda clonada
      */
-    @Override
     public Celda clonar() {
         return new Vacia();
     }

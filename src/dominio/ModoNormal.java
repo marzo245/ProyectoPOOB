@@ -24,6 +24,7 @@ public class ModoNormal extends ModoJuego {
      */
     public Celda[][] jugar(int row, int col, String tipoPiedra) {
         if (validarCantidadPiedras(tipoPiedra)) {
+            ronda();
             return ponerPiedra(row, col, tipoPiedra);
         }
         return Gomoku.getBoard();

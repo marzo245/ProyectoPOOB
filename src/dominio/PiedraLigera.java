@@ -14,17 +14,14 @@ public class PiedraLigera extends Piedra {
      */
     public PiedraLigera(int row, int col) {
         super(row, col);
-        super.vida = 3;
+        vida = 3;
     }
 
     /**
      * Este metodo define cuando pasa una ronda en el juego
      */
     public void ronda() {
-        if (super.vida == 0) {
-            Gomoku.getCelda(row, col).setPiedra(new PiedraVacia());
-        }
-        super.vida -= 1;
+        vida -= 1;
     }
 
 }

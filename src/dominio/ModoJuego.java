@@ -55,7 +55,7 @@ public abstract class ModoJuego {
             if (piedraActual instanceof PiedraVacia) {
                 // Si es PiedraVacia, crea una nueva instancia de Piedra y asígnale el nombre
                 Piedra nuevaPiedra;
-                if (tipoPiedra.equals("PiedraPesada")) {
+                if (tipoPiedra.equals("Piedra Pesada")) {
                     nuevaPiedra = new PiedraPesada(row, col);
                 } else {
                     // Agrega condiciones para otros tipos de piedra si es necesario
@@ -102,4 +102,21 @@ public abstract class ModoJuego {
     }
 
     protected abstract boolean validarCantidadPiedras(String tipoPiedra);
+
+    protected void ronda() {
+        Celda[][] board = Gomoku.getInstance().getBoard();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] instanceof Ocupada) {
+                    board[i][j].getPiedra().ronda();
+                    if (board[i][j].getPiedra() instanceof PiedraLigera) {
+                        if (board[i][j].getPiedra().getVida() == 0) {
+                            board[i][j] = new Vacia();
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }
