@@ -6,7 +6,7 @@ package dominio;
  * Version: 1.2 09/12/2023
  */
 public abstract class Piedra {
-    protected static int vida = -1;
+    protected int vida;
     protected String nombre = "Nothing";
     protected static int row;
     protected static int col;

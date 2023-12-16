@@ -86,12 +86,10 @@ public class GameController implements ActionListener {
 					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 					info.setText("Turno: " + GomokuGUI.getFirstName()
 							+ " |   Color ficha: Blanca | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
-					System.out.println(Gomoku.getInstance().getPlayer1().getPiedrasPesadas());
 				} else {
 					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 					info.setText("Turno: " + GomokuGUI.getSecondName()
 							+ " |   Color ficha: Negra   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
-					System.out.println(Gomoku.getInstance().getPlayer2().getPiedrasPesadas());
 				}
 
 				GomokuGUI.getBoardComponent().repaint();

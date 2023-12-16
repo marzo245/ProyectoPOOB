@@ -57,12 +57,13 @@ public abstract class ModoJuego {
                 Piedra nuevaPiedra;
                 if (tipoPiedra.equals("Piedra Pesada")) {
                     nuevaPiedra = new PiedraPesada(row, col);
+
                 } else {
                     // Agrega condiciones para otros tipos de piedra si es necesario
                     nuevaPiedra = new PiedraLigera(row, col);
                 }
                 nuevaPiedra.setName(Gomoku.getTurno());
-
+                nuevaPiedra.setVida(3);
                 // Asigna la nueva piedra a la celda
                 celda.setPiedra(nuevaPiedra);
             } else {
@@ -111,6 +112,8 @@ public abstract class ModoJuego {
                     board[i][j].getPiedra().ronda();
                     if (board[i][j].getPiedra() instanceof PiedraLigera) {
                         if (board[i][j].getPiedra().getVida() == 0) {
+                            System.out.print("Piedra ligera muerta en: " + i + " " + j
+                                    + board[i][j].getPiedra().getVida() + "\n");
                             board[i][j] = new Vacia();
                         }
                     }

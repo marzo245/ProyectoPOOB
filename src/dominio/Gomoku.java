@@ -509,12 +509,7 @@ public class Gomoku {
      * @return Celda en la posición especificada
      */
     public static Celda getCelda(int row, int col) {
-        Celda celda = board[row][col];
-        if (celda instanceof Vacia) {
-            Piedra nuevaPiedra = new PiedraVacia(); // Reemplaza con la clase de piedra que necesites
-            celda.setPiedra(nuevaPiedra);
-        }
-        return celda;
+        return board[row][col];
     }
 
     /**
