@@ -15,7 +15,7 @@ public class MaquinaMiedosaPlayer extends Player {
         int[] mejorJugada = encontrarMejorJugadaLejosDelUltimoMovimiento(tablero, getColor(), row, col);
 
         // Retornar el tablero actualizado
-        return Gomoku.getInstance().getModoDeJuego().jugar(mejorJugada[0], mejorJugada[1], "Piedra Pesada");
+        return Gomoku.getInstance().getModoDeJuego().jugar(mejorJugada[0], mejorJugada[1], "Piedra Normal");
     }
 
     private int[] encontrarMejorJugadaLejosDelUltimoMovimiento(Celda[][] tablero, String color, int lastMoveRow,

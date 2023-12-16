@@ -79,6 +79,6 @@ public class MaquinaAgresivaPlayer extends Player {
         } while (!(tablero[row][col] instanceof Vacia));
 
         // Realizar la jugada en la posición aleatoria
-        return Gomoku.getInstance().getModoDeJuego().jugar(row, col, "PiedraPesada");
+        return Gomoku.getInstance().getModoDeJuego().jugar(row, col, "Piedra Normal");
     }
 }

@@ -8,8 +8,8 @@ package dominio;
 public abstract class Piedra {
     protected int vida;
     protected String nombre = "Nothing";
-    protected static int row;
-    protected static int col;
+    protected int row;
+    protected int col;
 
     /**
      * Constructor de la clase

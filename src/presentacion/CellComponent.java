@@ -177,11 +177,11 @@ public class CellComponent extends JButton {
 		/*
 		 * Dibuja un borde alrededor de la piedra de pendiendo del tipo que sea
 		 */
-		if (tipoDePiedra.equals("Piedra Pesada")) {
+		if (tipoDePiedra.equals("Piedra Pesada") && color != Cell.EMPTY) {
 			g2.setStroke(new BasicStroke(3));
 			g2.setColor(Color.ORANGE);
 			g2.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
-		} else if (tipoDePiedra.equals("Piedra Ligera")) {
+		} else if (tipoDePiedra.equals("Piedra Ligera") && color != Cell.EMPTY) {
 			g2.setStroke(new BasicStroke(3));
 			g2.setColor(Color.GREEN);
 			g2.drawOval(4, 4, getWidth() - 8, getHeight() - 8);

@@ -15,7 +15,7 @@ public class MaquinaExpertaPlayer extends Player {
         int[] mejorJugada = encontrarMejorJugada(tablero, getColor());
 
         // Retornar el tablero actualizado
-        return Gomoku.getInstance().getModoDeJuego().jugar(mejorJugada[0], mejorJugada[1], "Piedra Pesada");
+        return Gomoku.getInstance().getModoDeJuego().jugar(mejorJugada[0], mejorJugada[1], "Piedra Normal");
     }
 
     private int[] encontrarMejorJugada(Celda[][] tablero, String color) {

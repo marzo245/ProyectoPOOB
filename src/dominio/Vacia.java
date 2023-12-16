@@ -9,10 +9,15 @@ package dominio;
  */
 public class Vacia extends Celda {
 
+    public Vacia() {
+        super();
+        piedra = new PiedraVacia(0, 0);
+    }
+
     /**
      * Este metodo se encarga del comportamiento de la celda una vez es activada
      */
-    public void actuando(int row, int col) {
+    public void actuando(int row, int col, String tipoDePiedra) {
     }
 
     /**

@@ -14,7 +14,7 @@ public abstract class Celda {
      * Constructor de la clase.
      */
     public Celda() {
-        this.piedra = new PiedraVacia();
+        this.piedra = new PiedraVacia(0, 0);
     }
 
     public abstract Celda clonar();
@@ -26,7 +26,7 @@ public abstract class Celda {
      * 
      * @param col Columna de la celda.
      */
-    public abstract void actuando(int row, int col);
+    public abstract void actuando(int row, int col, String tipoDePiedra);
 
     /*
      * Establece el color de la celda.
@@ -38,8 +38,11 @@ public abstract class Celda {
             piedra = new PiedraPesada(row, col);
         } else if (tipoPiedra.equals("Piedra Ligera")) {
             piedra = new PiedraLigera(row, col);
-        } else
-            piedra = new PiedraVacia();
+        } else if (tipoPiedra.equals("Piedra Normal")) {
+            piedra = new PiedraNormal(row, col);
+        } else {
+            piedra = new PiedraVacia(row, col);
+        }
     }
 
     /*

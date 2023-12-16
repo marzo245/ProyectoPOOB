@@ -43,7 +43,7 @@ public abstract class ModoJuego {
      * @return Tablero con la piedra jugada.
      */
     public Celda[][] ponerPiedra(int row, int col, String tipoPiedra) {
-        if (validarPosicion(row, col)) {
+        if (validarPosicion(row, col, tipoPiedra)) {
 
             Gomoku.setCelda(row, col, new Ocupada());
 
@@ -86,16 +86,16 @@ public abstract class ModoJuego {
      * @param col Columna donde se quiere jugar la piedra.
      * @return True si la posicion es valida, false de lo contrario.
      */
-    public boolean validarPosicion(int row, int col) {
+    public boolean validarPosicion(int row, int col, String tipoPiedra) {
         if (Gomoku.getCelda(row, col) instanceof Vacia)
             return true;
         else if (Gomoku.getCelda(row, col) instanceof Mina) {
-            Gomoku.getCelda(row, col).actuando(row, col);
+            Gomoku.getCelda(row, col).actuando(row, col, tipoPiedra);
             Gomoku.getInstance().setMensaje("Has pisado una mina");
             Gomoku.getInstance().setHayMensjae(true);
             return true;
         } else if (Gomoku.getCelda(row, col) instanceof Teleport) {
-            Gomoku.getCelda(row, col).actuando(row, col);
+            Gomoku.getCelda(row, col).actuando(row, col, tipoPiedra);
             Gomoku.getInstance().setMensaje("Has pisado un teleport");
             Gomoku.getInstance().setHayMensjae(true);
             return false;

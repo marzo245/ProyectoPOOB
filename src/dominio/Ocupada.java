@@ -22,7 +22,7 @@ public class Ocupada extends Celda {
      * @param col Columna donde se quiere jugar la piedra.
      * @return Tablero con la piedra jugada.
      */
-    public void actuando(int row, int col) {
+    public void actuando(int row, int col, String tipoDePiedra) {
     }
 
     /**

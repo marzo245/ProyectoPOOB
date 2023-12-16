@@ -177,8 +177,16 @@ public class Gomoku {
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = col;
             contador++;
-            if (contador == 5) {
+            if (board[i][col].getPiedra() instanceof PiedraPesada
+                    && board[i][col].getPiedra().getName().equals("Blanca")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
+                System.out.println(contador);
                 return true;
             }
         }
@@ -193,9 +201,15 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = row;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[row][j].getPiedra() instanceof PiedraPesada
+                    && board[row][j].getPiedra().getName().equals("Blanca")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
+                System.out.println(contador);
                 return true;
             }
         }
@@ -210,8 +224,12 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Blanca")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
                 return true;
             }
@@ -227,13 +245,17 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Blanca")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
+                System.out.println(contador);
                 return true;
             }
         }
-
         return false;
     }
 
@@ -248,8 +270,13 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = col;
-            contador++;
-            if (contador == 5) {
+            if (board[i][col].getPiedra() instanceof PiedraPesada
+                    && board[i][col].getPiedra().getName().equals("Negra")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
                 return true;
             }
@@ -265,8 +292,14 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = row;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[row][j].getPiedra() instanceof PiedraPesada
+                    && board[row][j].getPiedra().getName().equals("Negra")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
                 return true;
             }
@@ -282,8 +315,12 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Negra")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
                 return true;
             }
@@ -299,8 +336,12 @@ public class Gomoku {
             }
             posicionesGanadorasTemp[0][contador] = i;
             posicionesGanadorasTemp[1][contador] = j;
-            contador++;
-            if (contador == 5) {
+            if (board[i][j].getPiedra() instanceof PiedraPesada && board[i][j].getPiedra().getName().equals("Negra")) {
+                contador += 2;
+            } else {
+                contador += 1;
+            }
+            if (contador >= 5) {
                 posicionesGanadoras = posicionesGanadorasTemp;
                 return true;
             }
@@ -315,10 +356,10 @@ public class Gomoku {
      */
     public void clearBoard() {
         if (modoJuego instanceof ModoLimiteFichas) {
-            player1.setPiedrasLigeras(10);
-            player1.setPiedrasPesadas(10);
-            player2.setPiedrasLigeras(10);
-            player2.setPiedrasPesadas(10);
+            player1.setPiedrasLigeras(5);
+            player1.setPiedrasPesadas(5);
+            player2.setPiedrasLigeras(5);
+            player2.setPiedrasPesadas(5);
             crearBoard(0, 0);
         } else {
             crearBoard(3, 3);

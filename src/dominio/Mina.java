@@ -22,7 +22,7 @@ public class Mina extends Celda {
      * @param row Fila de la celda
      * @param col Columna de la celda
      */
-    public void actuando(int row, int col) {
+    public void actuando(int row, int col, String tipoDePiedra) {
         String turnoActual = Gomoku.getTurno();
 
         for (int i = Math.max(0, row - 1); i <= Math.min(Board.HEIGHT - 1, row + 1); i++) {
@@ -38,6 +38,7 @@ public class Mina extends Celda {
         Gomoku.getInstance().setCelda(row, col, new Ocupada());
         Piedra piedra = Gomoku.getCelda(row, col).getPiedra();
         piedra.setName(turnoActual.equals("Blanca") ? "Blanca" : "Negra");
+        Gomoku.getCelda(row, col).setPiedra(piedra);
     }
 
     private void calcularPuntos(boolean propia) {
