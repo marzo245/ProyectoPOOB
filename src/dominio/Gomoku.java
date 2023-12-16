@@ -197,6 +197,9 @@ public class Gomoku {
                     board[newRow][newCol] instanceof Ocupada &&
                     board[newRow][newCol].getPiedra().getName().equals(elTurno)) {
                 count++;
+                if (board[newRow][newCol].getPiedra() instanceof PiedraPesada) {
+                    count++;
+                }
 
                 // Almacenar la posición ganadora
                 ganadoras[0][ganadorasCount] = newRow;

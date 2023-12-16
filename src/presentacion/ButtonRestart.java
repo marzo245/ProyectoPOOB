@@ -59,10 +59,10 @@ public class ButtonRestart extends JPanel implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == openButton){
-			GameController.cargarEstadoJuego();
+			GomokuGUI.cargarEstadoJuego();
 		
 		} else if(e.getSource() == saveButton){
-			GameController.guardarEstadoJuego();
+			GomokuGUI.guardarEstadoJuego();
 			GameController.restartGame();
 			TimerComponent.getTimer().start();
 		} else if(e.getSource() == restartButton) {
