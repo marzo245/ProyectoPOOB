@@ -17,16 +17,8 @@ import dominio.*;
 
 public class GameController implements ActionListener {
 
-	private static CellComponent cell;
+	private CellComponent cell;
 	private static String tipoDePiedra = "Piedra pesada";
-	private static GameController gameController;
-
-	public static GameController intance() {
-		if (gameController == null) {
-			gameController = new GameController(null);
-		}
-		return gameController;
-	}
 
 	/**
 	 * 
@@ -84,13 +76,16 @@ public class GameController implements ActionListener {
 						TimerComponent.switchToTimer2();
 					}
 				} else {
-					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
-					info.setText("Turno: " + GomokuGUI.getSecondName()
-							+ " |   Color ficha: Negra   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
-					if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
-						TimerDownComponent.switchToTimer1();
-					} else {
-						TimerComponent.switchToTimer1();
+					if (Gomoku.getPlayer2() instanceof HumanoPlayer) {
+						JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
+						info.setText("Turno: " + GomokuGUI.getSecondName()
+								+ " |   Color ficha: Negra   | Puntaje: "
+								+ Gomoku.getInstance().getPlayer2().getScore());
+						if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+							TimerDownComponent.switchToTimer1();
+						} else {
+							TimerComponent.switchToTimer1();
+						}
 					}
 				}
 
@@ -128,7 +123,7 @@ public class GameController implements ActionListener {
 		tipoDePiedra = newPiedra;
 	}
 
-	public static void checkWinneroffTime() {
+	public void checkWinneroffTime() {
 		if (Gomoku.getInstance().getSeEncontroGanador()) {
 			cellDisableClick();
 			cell.setIsCellOfWin(true);
@@ -155,7 +150,7 @@ public class GameController implements ActionListener {
 	 * después de que se haya encontrado un ganador en el juego.
 	 * 
 	 */
-	public static void cellDisableClick() {
+	public void cellDisableClick() {
 		for (int i = 0; i < Board.HEIGHT; i++) {
 			for (int j = 0; j < Board.WIDTH; j++) {
 				BoardVisual.getCells()[i][j].setEnableClick(false);
@@ -170,7 +165,7 @@ public class GameController implements ActionListener {
 	 * InfoComponent().
 	 * 
 	 */
-	public static void notifyWinner() {
+	public void notifyWinner() {
 		JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 		if (Gomoku.getInstance().getGanador().equals("Negra")) {
 			info.setText("Bravo! " + GomokuGUI.getFirstName() + " ganó:)");

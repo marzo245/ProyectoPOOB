@@ -87,7 +87,6 @@ public class TimerDownComponent extends JPanel {
                         timer.stop();
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Blanca");
-                        GameController.intance().checkWinneroffTime();
                     }
                 }
                 secondString1 = "" + second1 % 60;
@@ -114,7 +113,6 @@ public class TimerDownComponent extends JPanel {
                         timer2.stop();
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Negra");
-                        GameController.intance().checkWinneroffTime();
 
                     }
                 }

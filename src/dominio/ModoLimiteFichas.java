@@ -70,6 +70,8 @@ public class ModoLimiteFichas extends ModoJuego {
                     Gomoku.getPlayer1().ronda(tipoPiedra);
                     return true;
                 }
+            } else {
+                return true;
             }
         } else {
             if (tipoPiedra.equals("Piedra Pesada")) {
@@ -110,9 +112,10 @@ public class ModoLimiteFichas extends ModoJuego {
                     Gomoku.getPlayer2().ronda(tipoPiedra);
                     return true;
                 }
+            } else {
+                return true;
             }
         }
-        return false;
     }
 
 }
