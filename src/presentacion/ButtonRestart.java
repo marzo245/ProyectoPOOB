@@ -12,11 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ButtonRestart extends JPanel implements ActionListener {
 
+	private JButton openButton;
+	private JButton saveButton;
 	private JButton restartButton;
 	private JButton quitButton;
 	private JButton mainMenuButton;
@@ -27,6 +31,14 @@ public class ButtonRestart extends JPanel implements ActionListener {
 	public ButtonRestart() {
 
 		setBackground(Color.BLACK);
+
+		openButton = new JButton("Abrir juego");
+		add(openButton);
+		openButton.addActionListener(this);
+
+		saveButton = new JButton("Guardar juego");
+		add(saveButton);
+		saveButton.addActionListener(this);
 
 		restartButton = new JButton("Nuevo juego");
 		add(restartButton);
@@ -46,7 +58,11 @@ public class ButtonRestart extends JPanel implements ActionListener {
 	 * se hace clic en los botones de esta clase.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == restartButton) {
+		if(e.getSource() == saveButton){
+			GameController.guardarEstadoJuego();
+			GameController.restartGame();
+			TimerComponent.getTimer().start();
+		} else if(e.getSource() == restartButton) {
 			int optionValue = JOptionPane.showConfirmDialog(null, "¿Estás seguro de comenzar un nuevo juego?",
 					"Confirmar Nuevo juego", JOptionPane.OK_CANCEL_OPTION);
 			if (optionValue == 0) {
