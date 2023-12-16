@@ -162,7 +162,7 @@ public class CellComponent extends JButton {
 			g2.fillOval(4, 4, getWidth() - 8, getHeight() - 8);
 			// Esto se hace nada mas con la intencionde que sepamos nosotros donde esta el
 			// tp toca quitarlo para la presentacion final
-		} else if (color == Cell.MiINE) {
+		} else if (color == Cell.MINE) {
 			g2.setColor(Color.RED);
 			g2.fillOval(4, 4, getWidth() - 8, getHeight() - 8);
 			// Esto se hace nada mas con la intencionde que sepamos nosotros donde esta el

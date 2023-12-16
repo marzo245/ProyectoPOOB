@@ -10,7 +10,6 @@ package presentacion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,22 +17,16 @@ import dominio.*;
 
 public class GameController implements ActionListener {
 
-	private CellComponent cell;
-	private static Cell lastColor;
-	private static int numStep = 0;
+	private static CellComponent cell;
 	private static String tipoDePiedra = "Piedra pesada";
-	/**
-	 * ArrayList para almacenar las filas y columnas de las fichas que forman
-	 * la disposición ganadora.
-	 */
-	private static ArrayList<Integer> rowOfWin = new ArrayList<Integer>();
-	private static ArrayList<Integer> colOfWin = new ArrayList<Integer>();
+	private static GameController gameController;
 
-	// Arrays para almacenar cambios en filas y columnas para verificar el orden
-	// de colores en el tablero.
-	public final static int[] DELTA_X = { -1, 1, -1, 1, 0, 0, -1, 1 };
-	public final static int[] DELTA_Y = { -1, 1, 1, -1, 1, -1, 0, 0 };
-	public final static int NUMBER_DIRECTION = 8;
+	public static GameController intance() {
+		if (gameController == null) {
+			gameController = new GameController(null);
+		}
+		return gameController;
+	}
 
 	/**
 	 * 
@@ -43,7 +36,6 @@ public class GameController implements ActionListener {
 	 */
 	public GameController(CellComponent cell) {
 		this.cell = cell;
-		lastColor = Cell.EMPTY;
 	}
 
 	/**
@@ -55,36 +47,29 @@ public class GameController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if (cell.getEnableClick()) {
 			if (TypeOfRock.getElijioTipoDePiedra()) {
-				Celda[][] temp = GomokuGUI.gomoku.getInstance().jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
+				Celda[][] temp = GomokuGUI.gomoku.jugada(cell.getRow(), cell.getCol(), tipoDePiedra);
 				for (int i = 0; i < Board.WIDTH; i++) {
 					for (int j = 0; j < Board.HEIGHT; j++) {
 						if (temp[i][j] instanceof Ocupada) {
-							if (Gomoku.getInstance().getCelda(j, i).getPiedra() instanceof PiedraPesada) {
-								GomokuGUI.getBoardComponent().getCells()[i][j].setTipoDePiedra("Piedra Pesada");
-							} else if (Gomoku.getInstance().getCelda(j, i).getPiedra() instanceof PiedraLigera) {
-								GomokuGUI.getBoardComponent().getCells()[i][j].setTipoDePiedra("Piedra Ligera");
-							} else {
-								GomokuGUI.getBoardComponent().getCells()[i][j].setTipoDePiedra("Piedra Normal");
-							}
-
+							cell.setTipoDePiedra(tipoDePiedra);
 							if (temp[i][j].getPiedra().getName().equals("Blanca")) {
-								GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.WHITE);
+								GomokuGUI.getBoardVisual().getCells()[i][j].setColor(Cell.WHITE);
 
 							} else {
-								GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.BLACK);
+								GomokuGUI.getBoardVisual().getCells()[i][j].setColor(Cell.BLACK);
 							}
 						} else if (temp[i][j] instanceof Mina) {
-							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.MiINE);
-							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setColor(Cell.MINE);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setEnableClick(true);
 						} else if (temp[i][j] instanceof Teleport) {
-							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.TELEPORT);
-							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setColor(Cell.TELEPORT);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setEnableClick(true);
 						} else if (temp[i][j] instanceof Vacia) {
-							GomokuGUI.getBoardComponent().getCells()[i][j].setColor(Cell.EMPTY);
-							GomokuGUI.getBoardComponent().getCells()[i][j].setEnableClick(true);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setColor(Cell.EMPTY);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setEnableClick(true);
 
 						} else {
-							GomokuGUI.getBoardComponent().getCells()[i][j].setEnabled(true);
+							GomokuGUI.getBoardVisual().getCells()[i][j].setEnabled(true);
 						}
 
 					}
@@ -93,16 +78,25 @@ public class GameController implements ActionListener {
 					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 					info.setText("Turno: " + GomokuGUI.getFirstName()
 							+ " |   Color ficha: Blanca | Puntaje: " + Gomoku.getInstance().getPlayer1().getScore());
+					if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+						TimerDownComponent.switchToTimer2();
+					} else {
+						TimerComponent.switchToTimer2();
+					}
 				} else {
 					JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 					info.setText("Turno: " + GomokuGUI.getSecondName()
 							+ " |   Color ficha: Negra   | Puntaje: " + Gomoku.getInstance().getPlayer2().getScore());
+					if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+						TimerDownComponent.switchToTimer1();
+					} else {
+						TimerComponent.switchToTimer1();
+					}
 				}
 
-				GomokuGUI.getBoardComponent().repaint();
+				GomokuGUI.getBoardVisual().repaint();
 				checkCellAvailability();
-				checkWinner(cell.getRow(), cell.getCol());
-				checkCellAvailability();
+				checkWinneroffTime();
 				if (Gomoku.getInstance().getHayMensaje()) {
 					JOptionPane.showMessageDialog(null,
 							Gomoku.getInstance().getMensaje(),
@@ -110,7 +104,6 @@ public class GameController implements ActionListener {
 					Gomoku.getInstance().setHayMensjae(false);
 				}
 				TypeOfRock.actualizarTextoBotones();
-				Gomoku.getInstance().imprimirTablero();
 				TypeOfRock.setElijioTipoDePiedra(false);
 			} else {
 				JOptionPane.showMessageDialog(null,
@@ -125,46 +118,31 @@ public class GameController implements ActionListener {
 
 	}
 
+	/**
+	 * 
+	 * Método getter para obtener el tipo de piedra que se está utilizando.
+	 * 
+	 * @return Tipo de piedra que se está utilizando.
+	 */
 	public static void setPiedra(String newPiedra) {
 		tipoDePiedra = newPiedra;
 	}
 
-	public void checkWinneroffTime() {
+	public static void checkWinneroffTime() {
 		if (Gomoku.getInstance().getSeEncontroGanador()) {
 			cellDisableClick();
 			cell.setIsCellOfWin(true);
 			notifyWinner();
-			TimerComponent.getTimer().stop();
-			int[][] win = Gomoku.getInstance().getPosicionesGanadoras();
-			for (int i = 0; i < 5; i++) {
-				BoardComponent.getCells()[win[0][i]][win[1][i]].setIsCellOfWin(true);
-				System.out.print(win[0][i] + " " + win[1][i] + " ");
+			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+				TimerDownComponent.getTimer().stop();
+				TimerDownComponent.getTimer2().stop();
+			} else {
+				TimerComponent.getTimer().stop();
+				TimerComponent.getTimer2().stop();
 			}
-
-		}
-	}
-
-	/**
-	 * Método para verificar si la cantidad alrededor de la piedra colocada por
-	 * el jugador en su turno es igual a cinco. Si es así, se encuentra al
-	 * ganador, todas las celdas se desactivan y se anuncia el ganador, luego
-	 * se detiene el temporizador del juego.
-	 * 
-	 * @param row
-	 *            índice de fila
-	 * @param col
-	 *            índice de columna
-	 *
-	 */
-	public void checkWinner(int row, int col) {
-		if (Gomoku.getInstance().getSeEncontroGanador()) {
-			cellDisableClick();
-			cell.setIsCellOfWin(true);
-			notifyWinner();
-			TimerComponent.getTimer().stop();
 			int[][] win = Gomoku.getInstance().getPosicionesGanadoras();
-			for (int i = 0; i < 5; i++) {
-				BoardComponent.getCells()[win[0][i]][win[1][i]].setIsCellOfWin(true);
+			for (int i = 0; i < win.length; i++) {
+				BoardVisual.getCells()[win[0][i]][win[1][i]].setIsCellOfWin(true);
 				System.out.print(win[0][i] + " " + win[1][i] + " ");
 			}
 
@@ -177,10 +155,10 @@ public class GameController implements ActionListener {
 	 * después de que se haya encontrado un ganador en el juego.
 	 * 
 	 */
-	public void cellDisableClick() {
+	public static void cellDisableClick() {
 		for (int i = 0; i < Board.HEIGHT; i++) {
 			for (int j = 0; j < Board.WIDTH; j++) {
-				BoardComponent.getCells()[i][j].setEnableClick(false);
+				BoardVisual.getCells()[i][j].setEnableClick(false);
 			}
 
 		}
@@ -192,7 +170,7 @@ public class GameController implements ActionListener {
 	 * InfoComponent().
 	 * 
 	 */
-	public void notifyWinner() {
+	public static void notifyWinner() {
 		JLabel info = GomokuGUI.getInfoComponent().getCurrentPlayer();
 		if (Gomoku.getInstance().getGanador().equals("Negra")) {
 			info.setText("Bravo! " + GomokuGUI.getFirstName() + " ganó:)");
@@ -207,27 +185,24 @@ public class GameController implements ActionListener {
 	 * 
 	 */
 	public static void restartGame() {
-		numStep = 0;
-		rowOfWin.clear();
-		colOfWin.clear();
 		Gomoku.getInstance().setHayMensjae(false);
 		Gomoku.getInstance().getPlayer1().setPiedrasPesadas(5);
 		Gomoku.getInstance().getPlayer1().setPiedrasLigeras(5);
 		Gomoku.getInstance().getPlayer2().setPiedrasPesadas(5);
 		Gomoku.getInstance().getPlayer2().setPiedrasLigeras(5);
-		TimerComponent.getTimer().stop();
-		TimerComponent.resetTimer();
-		GomokuGUI.getBoardComponent().clearBoard();
+		if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+			TimerDownComponent.getTimer().stop();
+			TimerDownComponent.getTimer2().stop();
+			TimerDownComponent.resetTimer();
+		} else {
+			TimerComponent.getTimer().stop();
+			TimerComponent.getTimer2().stop();
+			TimerComponent.resetTimer();
+		}
+		GomokuGUI.getBoardVisual().clearBoard();
 		Gomoku.getInstance().setSeEncontroGanador(false);
 		GomokuGUI.getInfoComponent().clearInfo();
 		TypeOfRock.actualizarTextoBotones();
-	}
-
-	/*
-	 * metodo para obtener el valor de la variable numStep
-	 */
-	public static int getNumStep() {
-		return numStep;
 	}
 
 	/**
@@ -239,7 +214,7 @@ public class GameController implements ActionListener {
 		boolean cellAvailable = false;
 		for (int i = 0; i < Board.HEIGHT; i++) {
 			for (int j = 0; j < Board.WIDTH; j++) {
-				if (BoardComponent.getCells()[i][j].getColor() == Cell.EMPTY) {
+				if (BoardVisual.getCells()[i][j].getColor() == Cell.EMPTY) {
 					cellAvailable = true;
 				}
 			}

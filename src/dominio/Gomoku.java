@@ -452,7 +452,7 @@ public class Gomoku {
             crearBoard(3, 3);
         } else if (modoDeJuegoElegido.equals("Tiempo")) {
             modoJuego = new ModoLimiteTiempo();
-            crearBoard(0, 0);
+            crearBoard(3, 3);
         } else if (modoDeJuegoElegido.equals("Limite de fichas")) {
             modoJuego = new ModoLimiteFichas();
             crearBoard(0, 0);
@@ -568,13 +568,13 @@ public class Gomoku {
      * Inicialmente, todas las celdas están vacías.
      * Luego, se coloca una mina y un teletransportador en posiciones aleatorias.
      */
-    public static void crearBoard(int minasColoar, int teleportColocar) {
+    public static void crearBoard(int minasColocar, int teleportColocar) {
         for (int i = 0; i < Board.HEIGHT; i++) {
             for (int j = 0; j < Board.WIDTH; j++) {
                 board[i][j] = new Vacia();
             }
         }
-        for (int i = 0; i < minasColoar; i++) {
+        for (int i = 0; i < minasColocar; i++) {
             int mineRow, mineCol;
             do {
                 mineRow = (int) (Math.random() * Board.HEIGHT);
@@ -592,6 +592,9 @@ public class Gomoku {
         }
     }
 
+    /**
+     * Imprime el tablero del juego.
+     */
     public static void imprimirTablero() {
         System.out.println("Tablero actual:");
 

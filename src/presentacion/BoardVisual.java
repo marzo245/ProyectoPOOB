@@ -4,7 +4,7 @@
  * dispuestas en filas y columnas.
  * 
  * @author Chicuazuque-Sierra
- * @version 1.0 25/11/2023
+ * @version 2.0 16/12/2023
  * 
  */
 package presentacion;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class BoardComponent extends JPanel {
+public class BoardVisual extends JPanel {
 
 	private static CellComponent[][] cells;
 
@@ -43,10 +43,10 @@ public class BoardComponent extends JPanel {
 
 	/**
 	 * 
-	 * Constructor de la clase BoardComponent.
+	 * Constructor de la clase BoardVisual.
 	 * 
 	 */
-	public BoardComponent() {
+	public BoardVisual() {
 		setPreferredSize(new Dimension(500, 500));
 		setLayout(new GridLayout(Board.HEIGHT, Board.WIDTH));
 
@@ -59,7 +59,7 @@ public class BoardComponent extends JPanel {
 				cells[i][j].addActionListener(new GameController(cells[i][j]));
 				add(cells[i][j]);
 				if (board[i][j] instanceof Mina) {
-					cells[i][j].setColor(Cell.MiINE);
+					cells[i][j].setColor(Cell.MINE);
 				} else if (board[i][j] instanceof Teleport) {
 					cells[i][j].setColor(Cell.TELEPORT);
 				}
@@ -67,6 +67,12 @@ public class BoardComponent extends JPanel {
 		}
 	}
 
+	/**
+	 * 
+	 * Este método retorna la matriz de componentes del tablero.
+	 * 
+	 * @return cells
+	 */
 	public static CellComponent[][] getCells() {
 		return cells;
 	}
@@ -91,7 +97,7 @@ public class BoardComponent extends JPanel {
 				cells[i][j].addActionListener(new GameController(cells[i][j]));
 				add(cells[i][j]);
 				if (board[i][j] instanceof Mina) {
-					cells[i][j].setColor(Cell.MiINE);
+					cells[i][j].setColor(Cell.MINE);
 				} else if (board[i][j] instanceof Teleport) {
 					cells[i][j].setColor(Cell.TELEPORT);
 				}

@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 import dominio.Gomoku;
 import dominio.HumanoPlayer;
+import dominio.ModoLimiteTiempo;
 
 public class GomokuGUI extends JFrame implements ActionListener {
 	private static GomokuGUI gomokuGUI;
@@ -42,10 +43,11 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	private static JButton exitButton2;
 
 	private static JPanel panel;
-	private static BoardComponent boardComponent;
+	private static BoardVisual BoardVisual;
 	private static InfoComponent infoComponent;
-	private static ButtonComponent buttonComponent;
+	private static ButtonRestart buttonComponent;
 	private static TimerComponent timerComponent;
+	private static TimerDownComponent timerDownComponent;
 	private static String firstName;
 	private static String secondName;
 	private static TypeOfRock typeRock;
@@ -320,22 +322,29 @@ public class GomokuGUI extends JFrame implements ActionListener {
 				panel.setBackground(Color.BLACK);
 				panel.setLayout(null);
 
-				boardComponent = new BoardComponent();
-				panel.add(boardComponent);
-				boardComponent.setPreferredSize(boardSize);
+				BoardVisual = new BoardVisual();
+				panel.add(BoardVisual);
+				BoardVisual.setPreferredSize(boardSize);
 
 				infoComponent = new InfoComponent();
-
-				buttonComponent = new ButtonComponent();
+				timerDownComponent = new TimerDownComponent();
 				timerComponent = new TimerComponent();
+				buttonComponent = new ButtonRestart();
+				if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+
+					add(timerDownComponent, BorderLayout.WEST);
+				} else {
+
+					add(timerComponent, BorderLayout.WEST);
+				}
 				typeRock = new TypeOfRock();
 				add(infoComponent, BorderLayout.NORTH);
 				add(buttonComponent, BorderLayout.SOUTH);
-				add(timerComponent, BorderLayout.WEST);
+
 				add(typeRock, BorderLayout.EAST);
 
 				revalidate();
-				boardComponent.setBounds((panel.getWidth() - boardSize.width) / 2,
+				BoardVisual.setBounds((panel.getWidth() - boardSize.width) / 2,
 						(panel.getHeight() - boardSize.height) / 2, boardSize.width, boardSize.height);
 
 				revalidate();
@@ -361,13 +370,13 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			panel.setBackground(Color.BLACK);
 			panel.setLayout(null);
 
-			boardComponent = new BoardComponent();
-			panel.add(boardComponent);
-			boardComponent.setPreferredSize(boardSize);
+			BoardVisual = new BoardVisual();
+			panel.add(BoardVisual);
+			BoardVisual.setPreferredSize(boardSize);
 
 			infoComponent = new InfoComponent();
 
-			buttonComponent = new ButtonComponent();
+			buttonComponent = new ButtonRestart();
 			timerComponent = new TimerComponent();
 			typeRock = new TypeOfRock();
 			add(infoComponent, BorderLayout.NORTH);
@@ -375,7 +384,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			add(timerComponent, BorderLayout.WEST);
 			add(typeRock, BorderLayout.EAST);
 			revalidate();
-			boardComponent.setBounds((panel.getWidth() - boardSize.width) / 2,
+			BoardVisual.setBounds((panel.getWidth() - boardSize.width) / 2,
 					(panel.getHeight() - boardSize.height) / 2, boardSize.width, boardSize.height);
 
 			revalidate();
@@ -397,8 +406,8 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	 * 
 	 * @return El componente del tablero.
 	 */
-	public static BoardComponent getBoardComponent() {
-		return boardComponent;
+	public static BoardVisual getBoardVisual() {
+		return BoardVisual;
 	}
 
 	/**
@@ -448,7 +457,11 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		 * el primer jugador, ingresa el nombre, comienza el temporizador del juego.
 		 */
 		if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
-			TimerComponent.getTimer().start();
+			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+				TimerDownComponent.getTimer().start();
+			} else {
+				TimerComponent.getTimer().start();
+			}
 			Gomoku.getInstance().getPlayer2().setName("Computador");
 		}
 
@@ -464,9 +477,12 @@ public class GomokuGUI extends JFrame implements ActionListener {
 			secondName = secondName.equals("Ingresa el nombre jugador 2") ? "Segundo jugador"
 					: secondName;
 			Gomoku.getPlayer2().setName(secondName);
-			TimerComponent.getTimer().start();
+			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+				TimerDownComponent.getTimer().start();
+			} else {
+				TimerComponent.getTimer().start();
+			}
 		}
-		TimerComponent.getTimer().start();
 
 	}
 
@@ -479,7 +495,11 @@ public class GomokuGUI extends JFrame implements ActionListener {
 		gomokuGUI.remove(panel);
 		gomokuGUI.remove(infoComponent);
 		gomokuGUI.remove(buttonComponent);
-		gomokuGUI.remove(timerComponent);
+		if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+			gomokuGUI.remove(timerDownComponent);
+		} else {
+			gomokuGUI.remove(timerComponent);
+		}
 		gomokuGUI.remove(typeRock);
 		Gomoku.getInstance().setSeEncontroGanador(false);
 

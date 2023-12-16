@@ -2,7 +2,7 @@
  * Esta clase es un panel que contiene componentes de botones
  * que se muestran durante el transcurso del juego.
  * @author Chicuazuque-Sierra
- * @version 1.0 25/11/2023
+ * @version 2.0 16/12/2023
  * 
  */
 package presentacion;
@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class ButtonComponent extends JPanel implements ActionListener {
+public class ButtonRestart extends JPanel implements ActionListener {
 
 	private JButton restartButton;
 	private JButton quitButton;
@@ -24,7 +24,7 @@ public class ButtonComponent extends JPanel implements ActionListener {
 	/**
 	 * Constructor de la clase ButtonComponent.
 	 */
-	public ButtonComponent() {
+	public ButtonRestart() {
 
 		setBackground(Color.BLACK);
 

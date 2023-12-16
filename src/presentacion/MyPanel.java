@@ -9,9 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class MiPanel extends JPanel {
+public class MyPanel extends JPanel {
 
-    public MiPanel() {
+    public MyPanel() {
         setBackground(Color.BLACK);
     }
 

@@ -13,6 +13,6 @@ package presentacion;
 
 public enum Cell {
 
-	WHITE, BLACK, EMPTY, MiINE, TELEPORT, GOLDEN;
+	WHITE, BLACK, EMPTY, MINE, TELEPORT, GOLDEN;
 
 }
