@@ -13,6 +13,7 @@ import dominio.Gomoku;
 public class TypeOfRock extends JPanel implements ActionListener {
     private static JButton piedraPesada;
     private static JButton piedraLigera;
+    private static JButton piedraNormal;
     private static boolean elijioTipoDePiedra = false;
 
     /**
@@ -36,13 +37,22 @@ public class TypeOfRock extends JPanel implements ActionListener {
         piedraLigera.setContentAreaFilled(false);
         piedraLigera.setFocusPainted(false);
         piedraLigera.setText("Piedras ligeras :" + Gomoku.getInstance().getPlayer1().getPiedrasLigeras());
+        piedraNormal = new JButton("Piedra Normal");
+        piedraNormal.addActionListener(this);
+        piedraNormal.setForeground(Color.ORANGE);
+        piedraNormal.setFont(new Font("SansSerif", Font.PLAIN, 50));
+        piedraNormal.setOpaque(false);
+        piedraNormal.setContentAreaFilled(false);
+        piedraNormal.setFocusPainted(false);
+        piedraNormal.setText("Piedras normales infinitas");
         JPanel concontenedorDeRocas = new JPanel();
-        concontenedorDeRocas.setLayout(new GridLayout(2, 1));
+        concontenedorDeRocas.setLayout(new GridLayout(3, 1));
         concontenedorDeRocas.setBackground(Color.BLACK);
 
         add(concontenedorDeRocas);
         concontenedorDeRocas.add(piedraLigera);
         concontenedorDeRocas.add(piedraPesada);
+        concontenedorDeRocas.add(piedraNormal);
     }
 
     /**
@@ -52,16 +62,24 @@ public class TypeOfRock extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == piedraPesada) {
             JOptionPane.showMessageDialog(null,
-                    "Elegiste la piedra pesada.\\n" + //
+                    "Elegiste la piedra pesada.\n" + //
                             "Ponla en una celda vacía!",
-                    "Advertencia esta piedra nunca muere", JOptionPane.WARNING_MESSAGE);
+                    "ESTAS PIEDRAS EQUIVALEN A 2 NORMALES", JOptionPane.WARNING_MESSAGE);
             GameController.setPiedra("Piedra Pesada");
             elijioTipoDePiedra = true;
         } else if (e.getSource() == piedraLigera) {
             JOptionPane.showMessageDialog(null,
-                    "Elegiste la piedra ligera.\nPonla en una celda vacía!",
-                    "Advertencia tiene 3 vidas de turno", JOptionPane.WARNING_MESSAGE);
+                    "Elegiste la piedra ligera.\n" +
+                            "Ponla en una celda vacía!",
+                    "ESTAS PIEDRAS SOLO ESTAN VIVAS 3 RONDAS", JOptionPane.WARNING_MESSAGE);
             GameController.setPiedra("Piedra Ligera");
+            elijioTipoDePiedra = true;
+        } else if (e.getSource() == piedraNormal) {
+            JOptionPane.showMessageDialog(null,
+                    "Elegiste la piedra normal.\n" +
+                            "Ponla en una celda vacía!",
+                    "ESTAS SON LAS TIPICAS PIEDRAS", JOptionPane.WARNING_MESSAGE);
+            GameController.setPiedra("Piedra Normal");
             elijioTipoDePiedra = true;
         }
     }

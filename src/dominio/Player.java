@@ -21,7 +21,7 @@ public abstract class Player {
         this.name = name;
         this.color = color;
         this.score = 0;
-        this.piedras = new int[] { 0, 0 };
+        this.piedras = new int[] { 0, 0, 0 };
     }
 
     /**
@@ -51,11 +51,21 @@ public abstract class Player {
         this.piedras[0] = a;
     }
 
+    public void setPiedrasNormales(int a) {
+        this.piedras[2] = a;
+    }
+
+    public int getPiedrasNormales() {
+        return this.piedras[2];
+    }
+
     public int getPiedras(String tipoPiedra) {
         if (tipoPiedra.equals("Pesada")) {
             return this.piedras[0];
-        } else {
+        } else if (tipoPiedra.equals("Ligera")) {
             return this.piedras[1];
+        } else {
+            return this.piedras[2];
         }
     }
 
@@ -90,8 +100,10 @@ public abstract class Player {
     public void ronda(String tipoPiedra) {
         if (tipoPiedra.equals("Piedra Pesada")) {
             piedras[0] -= 1;
-        } else {
+        } else if (tipoPiedra.equals("Piedra Ligera")) {
             piedras[1] -= 1;
+        } else {
+            piedras[2] -= 1;
         }
     }
 

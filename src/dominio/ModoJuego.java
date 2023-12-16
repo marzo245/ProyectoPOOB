@@ -58,6 +58,8 @@ public abstract class ModoJuego {
                 if (tipoPiedra.equals("Piedra Pesada")) {
                     nuevaPiedra = new PiedraPesada(row, col);
 
+                } else if (tipoPiedra.equals("Piedra Normal")) {
+                    nuevaPiedra = new PiedraNormal(row, col);
                 } else {
                     // Agrega condiciones para otros tipos de piedra si es necesario
                     nuevaPiedra = new PiedraLigera(row, col);

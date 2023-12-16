@@ -173,10 +173,9 @@ public class CellComponent extends JButton {
 		}
 		// Esto se hace nada mas con la intencionde que sepamos nosotros donde esta el
 		// tp toca quitarlo para la presentacion final
+
 		/*
-		 * Si la celda es parte de la disposición ganadora,
-		 * entonces se vuelve a dibujar y se agrega un borde para
-		 * resaltar qué celdas son parte de la disposición ganadora.
+		 * Dibuja un borde alrededor de la piedra de pendiendo del tipo que sea
 		 */
 		if (tipoDePiedra.equals("Piedra Pesada")) {
 			g2.setStroke(new BasicStroke(3));
@@ -188,6 +187,11 @@ public class CellComponent extends JButton {
 			g2.drawOval(4, 4, getWidth() - 8, getHeight() - 8);
 		}
 
+		/*
+		 * Si la celda es parte de la disposición ganadora,
+		 * entonces se vuelve a dibujar y se agrega un borde para
+		 * resaltar qué celdas son parte de la disposición ganadora.
+		 */
 		if (isCellOfWin) {
 			if (color == Cell.BLACK) {
 				g2.setColor(Color.BLACK);

@@ -458,8 +458,9 @@ public class Gomoku {
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
             player1 = new MaquinaExpertaPlayer(NombreJugador1, "Blanca");
         }
-        player1.setPiedrasPesadas(10);
-        player1.setPiedrasLigeras(10);
+        player1.setPiedrasPesadas(5);
+        player1.setPiedrasLigeras(5);
+        player1.setPiedrasNormales(10);
     }
 
     /**
@@ -479,8 +480,9 @@ public class Gomoku {
         } else if (tipo.equals("MaquinaExpertaPlayer")) {
             player2 = new MaquinaExpertaPlayer(NombreJugador1, "Negra");
         }
-        player2.setPiedrasPesadas(10);
-        player2.setPiedrasLigeras(10);
+        player2.setPiedrasPesadas(5);
+        player2.setPiedrasLigeras(5);
+        player2.setPiedrasNormales(10);
     }
 
     /**

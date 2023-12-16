@@ -51,6 +51,7 @@ public class ModoNormal extends ModoJuego {
                     return true;
                 }
             } else {
+                Gomoku.getPlayer1().setPiedrasNormales(10);
                 return true;
             }
         } else {
@@ -71,6 +72,7 @@ public class ModoNormal extends ModoJuego {
                     return true;
                 }
             } else {
+                Gomoku.getPlayer2().setPiedrasNormales(10);
                 return true;
             }
         }
