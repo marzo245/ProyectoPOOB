@@ -22,7 +22,7 @@ public class MaquinaAgresivaPlayer extends Player {
 
             // Si hay una jugada de bloqueo, realizarla
             if (bloqueo != null) {
-                return Gomoku.getInstance().getModoDeJuego().jugar(bloqueo[0], bloqueo[1], "PiedraPesada");
+                return Gomoku.getInstance().getModoDeJuego().jugar(bloqueo[0], bloqueo[1], "Piedra Pesada");
             }
         }
 
