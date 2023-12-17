@@ -1,5 +1,7 @@
 package dominio;
 
+import java.awt.Color;
+
 /**
  * Esta clase define el comportamiento de los jugadores y el como estos jugaran
  * Autor: Chicuazuque-Sierra
@@ -10,6 +12,7 @@ public abstract class Player {
     private String color;
     private String name = "NoName";
     private int[] piedras;
+    protected Color colorFicha;
 
     /**
      * Constructor de la clase
@@ -22,6 +25,10 @@ public abstract class Player {
         this.color = color;
         this.score = 0;
         this.piedras = new int[] { 0, 0, 0 };
+    }
+
+    public void setColorFicha(Color colorFicha) {
+        this.colorFicha = colorFicha;
     }
 
     /**
@@ -42,7 +49,8 @@ public abstract class Player {
     public int getScore() {
         return score;
     }
-    public void setScore(int score){
+
+    public void setScore(int score) {
         this.score = score;
     }
 

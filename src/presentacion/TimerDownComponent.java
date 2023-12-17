@@ -43,31 +43,24 @@ public class TimerDownComponent extends JPanel {
         setPreferredSize(new Dimension(300, 300));
         setBackground(Color.BLACK);
         setLayout(new FlowLayout(FlowLayout.RIGHT));
-        millisecond1 = 0;
-        second1 = 30; // Inicializa en 1 minuto y 30 segundos
-        minute1 = 1;
 
-        secondString1 = "" + second1 % 60;
-        minuteString1 = "" + minute1;
-        if (second1 % 60 < 10) {
-            secondString1 = "0" + secondString1;
-        }
-        if (minute1 < 10) {
-            minuteString1 = "0" + minuteString1;
-        }
+        // Inicializar milisegundos para 1 minuto y 30 segundos
+        millisecond1 = 90 * 1000; // 90 segundos * 1000 milisegundos
+        second1 = millisecond1 / 1000;
+        minute1 = second1 / 60; // Obtener la cantidad de minutos
+        second1 %= 60; // Obtener los segundos restantes
 
-        millisecond2 = 0;
-        second2 = 30; // Inicializa en 1 minuto y 30 segundos
-        minute2 = 1;
+        secondString1 = String.format("%02d", second1);
+        minuteString1 = String.format("%02d", minute1);
 
-        secondString2 = "" + second2 % 60;
-        minuteString2 = "" + minute2;
-        if (second2 % 60 < 10) {
-            secondString2 = "0" + secondString2;
-        }
-        if (minute2 < 10) {
-            minuteString2 = "0" + minuteString2;
-        }
+        // Repetir el proceso para el segundo temporizador
+        millisecond2 = 90 * 1000;
+        second2 = millisecond2 / 1000;
+        minute2 = second2 / 60;
+        second2 %= 60;
+
+        secondString2 = String.format("%02d", second2);
+        minuteString2 = String.format("%02d", minute2);
 
         timeLabel = new JLabel();
         timeLabel.setFont(new Font("SansSerif", Font.PLAIN, 80));
@@ -77,53 +70,54 @@ public class TimerDownComponent extends JPanel {
 
         timer = new Timer(TENTH_SEC, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                millisecond1--;
-                second1 = millisecond1 / 10;
+                millisecond1 -= 100; // Reducir en 100 milisegundos
+
+                second1 = millisecond1 / 1000;
+                minute1 = second1 / 60;
+                second1 %= 60;
+
                 if (millisecond1 < 0) {
                     minute1--;
                     second1 = 59;
-                    millisecond1 = 599;
+                    millisecond1 = 59000; // Reiniciar a 59 segundos y 0 milisegundos
+
                     if (minute1 < 0) {
                         timer.stop();
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Blanca");
                     }
                 }
-                secondString1 = "" + second1 % 60;
-                minuteString1 = "" + minute1;
-                if (second1 % 60 < 10) {
-                    secondString1 = "0" + secondString1;
-                }
-                if (minute1 < 10) {
-                    minuteString1 = "0" + minuteString1;
-                }
+
+                secondString1 = String.format("%02d", second1);
+                minuteString1 = String.format("%02d", minute1);
+
                 timeLabel.setText(minuteString1 + ":" + secondString1);
             }
         });
 
         timer2 = new Timer(TENTH_SEC, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                millisecond2--;
-                second2 = millisecond2 / 10;
+                millisecond2 -= 100; // Reducir en 100 milisegundos
+
+                second2 = millisecond2 / 1000;
+                minute2 = second2 / 60;
+                second2 %= 60;
+
                 if (millisecond2 < 0) {
                     minute2--;
                     second2 = 59;
-                    millisecond2 = 599;
+                    millisecond2 = 59000; // Reiniciar a 59 segundos y 0 milisegundos
+
                     if (minute2 < 0) {
                         timer2.stop();
                         Gomoku.getInstance().setSeEncontroGanador(true);
                         Gomoku.getInstance().setGanador("Negra");
-
                     }
                 }
-                secondString2 = "" + second2 % 60;
-                minuteString2 = "" + minute2;
-                if (second2 % 60 < 10) {
-                    secondString2 = "0" + secondString2;
-                }
-                if (minute2 < 10) {
-                    minuteString2 = "0" + minuteString2;
-                }
+
+                secondString2 = String.format("%02d", second2);
+                minuteString2 = String.format("%02d", minute2);
+
                 timeLabel.setText(minuteString2 + ":" + secondString2);
             }
         });
@@ -162,32 +156,26 @@ public class TimerDownComponent extends JPanel {
      * Este método se utiliza para restablecer el temporizador a cero.
      */
     public static void resetTimer() {
-        millisecond1 = 0;
-        second1 = 30; // Inicializa en 1 minuto y 30 segundos
-        minute1 = 1;
+        // Reiniciar milisegundos, segundos y minutos a los valores iniciales
+        millisecond1 = 90 * 1000; // 90 segundos * 1000 milisegundos
+        second1 = millisecond1 / 1000;
+        minute1 = second1 / 60;
+        second1 %= 60;
 
-        secondString1 = "" + second1 % 60;
-        minuteString1 = "" + minute1;
-        if (second1 % 60 < 10) {
-            secondString1 = "0" + secondString1;
-        }
-        if (minute1 < 10) {
-            minuteString1 = "0" + minuteString1;
-        }
+        secondString1 = String.format("%02d", second1);
+        minuteString1 = String.format("%02d", minute1);
 
-        millisecond2 = 0;
-        second2 = 30; // Inicializa en 1 minuto y 30 segundos
-        minute2 = 1;
+        // Repetir el proceso para el segundo temporizador
+        millisecond2 = 90 * 1000;
+        second2 = millisecond2 / 1000;
+        minute2 = second2 / 60;
+        second2 %= 60;
 
-        secondString2 = "" + second2 % 60;
-        minuteString2 = "" + minute2;
-        if (second2 % 60 < 10) {
-            secondString2 = "0" + secondString2;
-        }
-        if (minute2 < 10) {
-            minuteString2 = "0" + minuteString2;
-        }
+        secondString2 = String.format("%02d", second2);
+        minuteString2 = String.format("%02d", minute2);
 
+        // Actualizar la etiqueta del temporizador
         timeLabel.setText(minuteString2 + ":" + secondString2);
     }
+
 }

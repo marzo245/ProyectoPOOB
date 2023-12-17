@@ -453,49 +453,57 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	 * Además, inicia el temporizador del juego según la configuración.
 	 */
 	public static void welcomeScreen() {
-		firstName = JOptionPane.showInputDialog(null,
+		// Obtener el nombre del jugador 1
+		String firstName = JOptionPane.showInputDialog(null,
 				"Bienvenido a GOMOKU!", "Ingresa el nombre del jugador uno");
-		firstName = firstName == null ? "Primer jugador" : firstName;
-		firstName = firstName.equals("Ingresa el nombre jugador 1") ? "Primer jugador"
-				: firstName;
+		firstName = (firstName == null || firstName.trim().isEmpty()) ? "Primer jugador" : firstName;
 
-		infoComponent.clearInfo();
+		// Obtener el color de la ficha del jugador 1
+		Color colorJugador1 = elegirColorFicha("Elige el color de tu ficha, " + firstName);
+
+		// Configurar el jugador 1 con el nombre y el color de la ficha
 		Gomoku.getInstance().getPlayer1().setName(firstName);
-		/*
-		 * Si el jugador elige jugar contra la computadora, entonces después de él, es
-		 * decir,
-		 * el primer jugador, ingresa el nombre, comienza el temporizador del juego.
-		 */
+		Gomoku.getInstance().getPlayer1().setColorFicha(colorJugador1);
+
+		// Configurar el temporizador si el segundo jugador es la computadora
 		if (!(Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer)) {
-			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
-				TimerDownComponent.getTimer().start();
-			} else {
-				TimerComponent.getTimer().start();
-			}
+			configurarTemporizador();
 			Gomoku.getInstance().getPlayer2().setName("Computador");
-		}
+		} else {
+			// Obtener el nombre del jugador 2
+			String secondName = JOptionPane.showInputDialog(null,
+					"Bienvenido a GOMOKU!", "Ingresa el nombre del jugador dos");
+			secondName = (secondName == null || secondName.trim().isEmpty()) ? "Segundo jugador" : secondName;
 
-		/*
-		 * Si no juega contra la computadora, entonces el segundo jugador ingresa su
-		 * nombre
-		 * y después de ingresar el nombre, comienza el temporizador del juego.
-		 */
-		if (Gomoku.getInstance().getPlayer2() instanceof HumanoPlayer) {
-			secondName = JOptionPane.showInputDialog(null,
-					"Bienvenido a GOMOKU!", "Ingresa el nombre  del jugador dos");
-			secondName = secondName == null ? "Segundo jugador" : secondName;
-			secondName = secondName.equals("Ingresa el nombre jugador 2") ? "Segundo jugador"
-					: secondName;
-			Gomoku.getPlayer2().setName(secondName);
-			if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
-				TimerDownComponent.getTimer().start();
-			} else {
-				TimerComponent.getTimer().start();
-			}
-		}
-		
+			// Obtener el color de la ficha del jugador 2
+			Color colorJugador2 = elegirColorFicha("Elige el color de tu ficha, " + secondName);
 
+			// Configurar el jugador 2 con el nombre y el color de la ficha
+			Gomoku.getInstance().getPlayer2().setName(secondName);
+			Gomoku.getInstance().getPlayer2().setColorFicha(colorJugador2);
+
+			// Configurar el temporizador
+			configurarTemporizador();
+		}
 	}
+
+	private static void configurarTemporizador() {
+		if (Gomoku.getInstance().getModoDeJuego() instanceof ModoLimiteTiempo) {
+			TimerDownComponent.getTimer().start();
+		} else {
+			TimerComponent.getTimer().start();
+		}
+	}
+
+	private static Color elegirColorFicha(String mensaje) {
+		Object[] options = { "Negro", "Blanco", };
+		int choice = JOptionPane.showOptionDialog(null, mensaje, "Elige el color de tu ficha",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+		// Devolver el color elegido
+		return (choice == JOptionPane.YES_OPTION) ? Color.BLACK : Color.WHITE;
+	}
+
 	public static void guardarEstadoJuego() {
 		try {
 			JFileChooser fileChooser = new JFileChooser();
@@ -512,7 +520,6 @@ public class GomokuGUI extends JFrame implements ActionListener {
 				int puntuacionJugador1 = Gomoku.getInstance().getPlayer1().getScore();
 				int puntuacionJugador2 = Gomoku.getInstance().getPlayer2().getScore();
 				int[][] posiciones = obtenerPosiciones();
-
 
 				// Crear un BufferedWriter para escribir en el archivo
 				BufferedWriter writer = new BufferedWriter(new FileWriter(archivo));
