@@ -496,7 +496,7 @@ public class GomokuGUI extends JFrame implements ActionListener {
 	}
 
 	private static Color elegirColorFicha(String mensaje) {
-		Object[] options = { "Negro", "Blanco", };
+		Object[] options = { "Negro", "Blanco" };
 		int choice = JOptionPane.showOptionDialog(null, mensaje, "Elige el color de tu ficha",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
